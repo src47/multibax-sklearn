@@ -4,10 +4,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 
 class MGPR:
     def __init__(self, kernel_list):
-        self.models = [
-            GaussianProcessRegressor(kernel=kernel_list[i], n_restarts_optimizer=10, random_state=47)
-            for i in range(len(kernel_list))
-        ]
+        self.models = [GaussianProcessRegressor(kernel=kernel_list[i]) for i in range(len(kernel_list))]
 
     def fit(self, X, y):
         for i, model in enumerate(self.models):

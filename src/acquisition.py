@@ -1,7 +1,6 @@
 import numpy as np
 from tqdm import tqdm
 from copy import deepcopy
-from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 def get_posterior_mean_and_std(x, model):
