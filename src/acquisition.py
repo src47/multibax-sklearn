@@ -1,6 +1,6 @@
+from copy import deepcopy
 import numpy as np
 from tqdm import tqdm
-from copy import deepcopy
 
 
 def get_posterior_mean_and_std(x, model):
@@ -12,56 +12,6 @@ def calculate_entropy(x, model):
     posterior_mean, posterior_std = get_posterior_mean_and_std(x, model)
     entropy = 0.5 * np.log(2 * np.pi * (posterior_std**2)) + 0.5
     return entropy
-
-
-def run_acquisition(x_train, y_train, X, Y, strategy, algorithm, model, collected_ids, n_posterior_samples):
-    if strategy == "infobax":
-        acquisition_function, trained_model, term1, term2 = multiproperty_infobax(
-            x_domain=X,
-            x_train=x_train,
-            y_train=y_train,
-            model=model,
-            algorithm=algorithm,
-            n_posterior_samples=n_posterior_samples,
-            verbose=False,
-        )
-    elif strategy == "meanbax":
-        acquisition_function, trained_model = multiproperty_meanbax(
-            x_domain=X, x_train=x_train, y_train=y_train, model=model, algorithm=algorithm, collected_ids=collected_ids
-        )
-    elif strategy == "mixed":
-        acquisition_function, trained_model = mixed(
-            x_domain=X,
-            x_train=x_train,
-            y_train=y_train,
-            model=model,
-            algorithm=algorithm,
-            n_posterior_samples=n_posterior_samples,
-            collected_ids=collected_ids,
-        )
-    else:
-        raise Exception("Unknown acquisition function")
-
-    next_id = optimize_acquisition_function(
-        acquisition_function=acquisition_function, collected_ids=collected_ids, prevent_requery=True
-    )
-    collected_ids.append(next_id)
-
-    x_next = X[next_id]
-    y_next = Y[next_id]
-
-    x_train = np.vstack((x_train, x_next))
-    y_train = np.vstack((y_train, y_next))
-
-    return x_train, y_train, trained_model, collected_ids, acquisition_function
-
-
-def optimize_acquisition_function(acquisition_function, collected_ids=None, prevent_requery=True):
-    if (prevent_requery) and (collected_ids is not None):
-        acquisition_function[collected_ids] = -np.inf
-
-    next_id = np.argmax(acquisition_function)
-    return next_id
 
 
 def multiproperty_infobax(x_domain, x_train, y_train, model, algorithm, n_posterior_samples=20, verbose=False):
@@ -133,3 +83,55 @@ def mixed(x_domain, x_train, y_train, model, algorithm, n_posterior_samples, col
         acquisition_function[predicted_target_ids] = np.mean(posterior_std, axis=-1)[predicted_target_ids]
 
     return acquisition_function, model
+
+
+def run_acquisition(
+    x_train, y_train, X, Y, strategy, algorithm, model, collected_ids, n_posterior_samples, prevent_requery=True
+):
+    if strategy == "infobax":
+        acquisition_function, trained_model, term1, term2 = multiproperty_infobax(
+            x_domain=X,
+            x_train=x_train,
+            y_train=y_train,
+            model=model,
+            algorithm=algorithm,
+            n_posterior_samples=n_posterior_samples,
+            verbose=False,
+        )
+    elif strategy == "meanbax":
+        acquisition_function, trained_model = multiproperty_meanbax(
+            x_domain=X, x_train=x_train, y_train=y_train, model=model, algorithm=algorithm, collected_ids=collected_ids
+        )
+    elif strategy == "mixed":
+        acquisition_function, trained_model = mixed(
+            x_domain=X,
+            x_train=x_train,
+            y_train=y_train,
+            model=model,
+            algorithm=algorithm,
+            n_posterior_samples=n_posterior_samples,
+            collected_ids=collected_ids,
+        )
+    else:
+        raise Exception("Unknown acquisition function")
+
+    next_id = optimize_acquisition_function(
+        acquisition_function=acquisition_function, collected_ids=collected_ids, prevent_requery=prevent_requery
+    )
+    collected_ids.append(next_id)
+
+    x_next = X[next_id]
+    y_next = Y[next_id]
+
+    x_train = np.vstack((x_train, x_next))
+    y_train = np.vstack((y_train, y_next))
+
+    return x_train, y_train, trained_model, collected_ids, acquisition_function
+
+
+def optimize_acquisition_function(acquisition_function, collected_ids=None, prevent_requery=True):
+    if (prevent_requery) and (collected_ids is not None):
+        acquisition_function[collected_ids] = -np.inf
+
+    next_id = np.argmax(acquisition_function)
+    return next_id
