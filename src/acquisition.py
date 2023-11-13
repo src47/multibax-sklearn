@@ -23,6 +23,8 @@ def multiproperty_infobax(x_domain, x_train, y_train, model, algorithm, n_poster
 
     term2 = np.zeros(term1.shape)
     posterior_samples = multi_gpr_model.sample_y(x_domain, n_posterior_samples)
+    if len(posterior_samples.shape) == 2:
+        posterior_samples = np.expand_dims(posterior_samples, axis=1)
 
     for i in tqdm(range(n_posterior_samples)) if verbose else range(n_posterior_samples):
         multi_gpr_model_fake = deepcopy(model)
