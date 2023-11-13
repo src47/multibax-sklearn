@@ -87,34 +87,44 @@ def plot_iteration_results(
 
 
 def plot_final_metrics(n_iters, metrics, strategies, best_possible_n_obtained, random_sampling):
+    # Plot for "Number Obtained"
+    fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+
+    # Subplot for mean and std of "Number Obtained"
     for strategy in strategies:
-        plt.plot(range(n_iters), np.mean(metrics[strategy]["n_obtained"], axis=0), label=strategy)
-        plt.fill_between(
+        axes[0].plot(range(n_iters), np.mean(metrics[strategy]["n_obtained"], axis=0), label=strategy)
+        axes[0].fill_between(
             range(n_iters),
             np.mean(metrics[strategy]["n_obtained"], axis=0) - np.std(metrics[strategy]["n_obtained"], axis=0),
             np.mean(metrics[strategy]["n_obtained"], axis=0) + np.std(metrics[strategy]["n_obtained"], axis=0),
             alpha=0.2,
         )
-    plt.plot(best_possible_n_obtained, "r--", label="Best Possible")
-    plt.plot(random_sampling, "r--", label="Random Sampling")
-    plt.xlabel("Iteration Number")
-    plt.ylabel("Number Obtained")
-    plt.legend()
-    plt.show()
 
+    axes[0].plot(best_possible_n_obtained, "r--", label="Best Possible")
+    axes[0].plot(random_sampling, "r--", label="Random Sampling")
+    axes[0].set_xlabel("Iteration Number")
+    axes[0].set_ylabel("Number Obtained")
+    axes[0].legend()
+
+    # Subplot for "Jaccard Posterior Index"
     for strategy in strategies:
-        plt.plot(range(n_iters), np.mean(metrics[strategy]["jaccard_posterior_index"], axis=0), c="b", label="InfoBAX")
-        plt.fill_between(
+        axes[1].plot(range(n_iters), np.mean(metrics[strategy]["jaccard_posterior_index"], axis=0), label=strategy)
+        axes[1].fill_between(
             range(n_iters),
             np.mean(metrics[strategy]["jaccard_posterior_index"], axis=0)
             - np.std(metrics[strategy]["jaccard_posterior_index"], axis=0),
             np.mean(metrics[strategy]["jaccard_posterior_index"], axis=0)
             + np.std(metrics[strategy]["jaccard_posterior_index"], axis=0),
             alpha=0.1,
-            color="b",
         )
-    plt.axhline(y=1.0, color="r", linestyle="-", label="Threshold")
-    plt.xlabel("Iteration Number")
-    plt.ylabel("Jaccard Posterior Index")
-    plt.legend()
+
+    axes[1].axhline(y=1.0, color="r", linestyle="-", label="Threshold")
+    axes[1].set_xlabel("Iteration Number")
+    axes[1].set_ylabel("Jaccard Posterior Index")
+    axes[1].legend()
+
+    # Adjust layout to prevent clipping of labels
+    plt.tight_layout()
+
+    # Show the plots
     plt.show()
