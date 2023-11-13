@@ -14,7 +14,15 @@ def calculate_entropy(x, model):
     return entropy
 
 
-def multi_infobax_gp(x_domain, x_train, y_train, model, algorithm, n_posterior_samples=20, verbose=False):
+def get_next_id(acquisition_function, collected_ids=None, prevent_requery=True):
+    if (prevent_requery) and (collected_ids is not None):
+        acquisition_function[collected_ids] = -np.inf
+
+    next_id = np.argmax(acquisition_function)
+    return next_id
+
+
+def multiproperty_infobax(x_domain, x_train, y_train, model, algorithm, n_posterior_samples=20, verbose=False):
     multi_gpr_model = deepcopy(model)
     multi_gpr_model.fit(x_train, y_train)
 
@@ -53,3 +61,33 @@ def multi_infobax_gp(x_domain, x_train, y_train, model, algorithm, n_posterior_s
         term2 = np.mean(term2, axis=-1)
 
     return acquisition_values, multi_gpr_model, term1, term2
+
+
+def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collected_ids):
+    model.fit(x_train, y_train)
+    posterior_mean, posterior_std = model.predict(x_domain)
+    predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
+
+    if (set(predicted_target_ids).issubset(collected_ids)) or (len(set(predicted_target_ids)) == 0):
+        acquisition_function = np.mean(posterior_std, axis=-1)
+    else:
+        acquisition_function = np.zeros(x_domain.shape[0])
+        acquisition_function[predicted_target_ids] = np.mean(posterior_std, axis=-1)[predicted_target_ids]
+
+    return acquisition_function, model
+
+
+def mixed(x_domain, x_train, y_train, model, algorithm, n_posterior_samples, collected_ids):
+    model.fit(x_train, y_train)
+    posterior_mean, posterior_std = model.predict(x_domain)
+    predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
+
+    if (set(predicted_target_ids).issubset(collected_ids)) or (len(set(predicted_target_ids)) == 0):
+        acquisition_function, model, term1, term2 = multiproperty_infobax(
+            x_domain, x_train, y_train, model, algorithm, n_posterior_samples, verbose=False
+        )
+    else:
+        acquisition_function = np.zeros(x_domain.shape[0])
+        acquisition_function[predicted_target_ids] = np.mean(posterior_std, axis=-1)[predicted_target_ids]
+
+    return acquisition_function, model

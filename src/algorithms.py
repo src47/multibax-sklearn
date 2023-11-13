@@ -41,8 +41,22 @@ class MultiRegionSetIntersection(SubsetAlgorithm):
     def identify_subspace(self, x, y):
         x_unnorm, y_unnorm = super().unnormalize(x, y)
         desired_indices = multi_level_region_intersection_Nd(y_unnorm, self.threshold_list)
-
         return desired_indices
+
+
+class Wishlist(SubsetAlgorithm):
+    def __init__(self, threshold_bounds, scalers):
+        super().__init__(scalers)
+        self.threshold_bounds = threshold_bounds
+        self.scalers = scalers
+
+    def identify_subspace(self, x, y):
+        desired_indices = set()
+        for threshold_list in self.threshold_bounds:
+            multi_region = MultiRegionSetIntersection(threshold_list, self.scalers)
+            ids = multi_region.identify_subspace(x, y)
+            desired_indices = desired_indices.union(set(ids))
+        return list(desired_indices)
 
 
 class GlobalOptimization1D(SubsetAlgorithm):
