@@ -36,10 +36,8 @@ def fit_hypers(x_train, y_train, kernel_list, n_restarts_optimizer=30):
     multi_gpr = MGPR(kernel_list=kernel_list, n_restarts_optimizer=n_restarts_optimizer)
     multi_gpr.fit(x_train, y_train)
 
-    n_models = len(multi_gpr.models)
     kernels = []
-
-    for i in range(n_models):
+    for i in range(len(multi_gpr.models)):
         params = multi_gpr.models[i].kernel_.get_params()
         alpha = params["k1__k1__constant_value"]
         ls = params["k1__k2__length_scale"]

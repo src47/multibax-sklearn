@@ -55,16 +55,24 @@ def multiproperty_infobax(x_domain, x_train, y_train, model, algorithm, n_poster
     return acquisition_values, multi_gpr_model, term1, term2
 
 
+def mean_posterior_std(posterior_std):
+    return np.mean(posterior_std, axis=-1)
+
+
+def meanbax_stuck(predicted_target_ids, collected_ids):
+    return (set(predicted_target_ids).issubset(collected_ids)) or (len(set(predicted_target_ids)) == 0)
+
+
 def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collected_ids):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
     predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
 
-    if (set(predicted_target_ids).issubset(collected_ids)) or (len(set(predicted_target_ids)) == 0):
-        acquisition_function = np.mean(posterior_std, axis=-1)
+    if meanbax_stuck(predicted_target_ids, collected_ids):
+        acquisition_function = mean_posterior_std
     else:
         acquisition_function = np.zeros(x_domain.shape[0])
-        acquisition_function[predicted_target_ids] = np.mean(posterior_std, axis=-1)[predicted_target_ids]
+        acquisition_function[predicted_target_ids] = mean_posterior_std(posterior_std)[predicted_target_ids]
 
     return acquisition_function, model
 
@@ -74,13 +82,13 @@ def mixed(x_domain, x_train, y_train, model, algorithm, n_posterior_samples, col
     posterior_mean, posterior_std = model.predict(x_domain)
     predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
 
-    if (set(predicted_target_ids).issubset(collected_ids)) or (len(set(predicted_target_ids)) == 0):
+    if meanbax_stuck(predicted_target_ids, collected_ids):
         acquisition_function, model, term1, term2 = multiproperty_infobax(
             x_domain, x_train, y_train, model, algorithm, n_posterior_samples, verbose=False
         )
     else:
         acquisition_function = np.zeros(x_domain.shape[0])
-        acquisition_function[predicted_target_ids] = np.mean(posterior_std, axis=-1)[predicted_target_ids]
+        acquisition_function[predicted_target_ids] = mean_posterior_std(posterior_std)[predicted_target_ids]
 
     return acquisition_function, model
 
