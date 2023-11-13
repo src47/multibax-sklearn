@@ -14,7 +14,49 @@ def calculate_entropy(x, model):
     return entropy
 
 
-def get_next_id(acquisition_function, collected_ids=None, prevent_requery=True):
+def run_acquisition(x_train, y_train, X, Y, strategy, algorithm, model, collected_ids, n_posterior_samples):
+    if strategy == "infobax":
+        acquisition_function, trained_model, term1, term2 = multiproperty_infobax(
+            x_domain=X,
+            x_train=x_train,
+            y_train=y_train,
+            model=model,
+            algorithm=algorithm,
+            n_posterior_samples=n_posterior_samples,
+            verbose=False,
+        )
+    elif strategy == "meanbax":
+        acquisition_function, trained_model = multiproperty_meanbax(
+            x_domain=X, x_train=x_train, y_train=y_train, model=model, algorithm=algorithm, collected_ids=collected_ids
+        )
+    elif strategy == "mixed":
+        acquisition_function, trained_model = mixed(
+            x_domain=X,
+            x_train=x_train,
+            y_train=y_train,
+            model=model,
+            algorithm=algorithm,
+            n_posterior_samples=n_posterior_samples,
+            collected_ids=collected_ids,
+        )
+    else:
+        raise Exception("Unknown acquisition function")
+
+    next_id = optimize_acquisition_function(
+        acquisition_function=acquisition_function, collected_ids=collected_ids, prevent_requery=True
+    )
+    collected_ids.append(next_id)
+
+    x_next = X[next_id]
+    y_next = Y[next_id]
+
+    x_train = np.vstack((x_train, x_next))
+    y_train = np.vstack((y_train, y_next))
+
+    return x_train, y_train, trained_model, collected_ids, acquisition_function
+
+
+def optimize_acquisition_function(acquisition_function, collected_ids=None, prevent_requery=True):
     if (prevent_requery) and (collected_ids is not None):
         acquisition_function[collected_ids] = -np.inf
 
