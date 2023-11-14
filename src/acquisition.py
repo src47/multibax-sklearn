@@ -80,7 +80,7 @@ def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collecte
     return acquisition_function, model
 
 
-def mixed(x_domain, x_train, y_train, model, algorithm, n_posterior_samples, collected_ids):
+def multiproperty_hybridbax(x_domain, x_train, y_train, model, algorithm, n_posterior_samples, collected_ids):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
     predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
@@ -114,7 +114,7 @@ def run_acquisition(
             x_domain=X, x_train=x_train, y_train=y_train, model=model, algorithm=algorithm, collected_ids=collected_ids
         )
     elif strategy == "mixed":
-        acquisition_function, trained_model = mixed(
+        acquisition_function, trained_model = multiproperty_hybridbax(
             x_domain=X,
             x_train=x_train,
             y_train=y_train,
