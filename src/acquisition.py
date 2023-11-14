@@ -1,20 +1,23 @@
 from copy import deepcopy
 import numpy as np
 from tqdm import tqdm
+from src.models import MGPR
 
 
-def get_posterior_mean_and_std(x, model):
+def get_posterior_mean_and_std(x: np.ndarray, model: MGPR) -> tuple(np.ndarray, np.ndarray):
     posterior_mean, posterior_std = np.squeeze(model.predict(x, return_std=True))
     return posterior_mean, posterior_std
 
 
-def calculate_entropy(x, model):
+def calculate_entropy(x: np.ndarray, model: MGPR) -> np.ndarray:
     posterior_mean, posterior_std = get_posterior_mean_and_std(x, model)
     entropy = 0.5 * np.log(2 * np.pi * (posterior_std**2)) + 0.5
     return entropy
 
 
-def multiproperty_infobax(x_domain, x_train, y_train, model, algorithm, n_posterior_samples=20, verbose=False):
+def multiproperty_infobax(
+    x_domain: np.ndarray, x_train: np.ndarray, y_train, model, algorithm, n_posterior_samples=20, verbose=False
+):
     multi_gpr_model = deepcopy(model)
     multi_gpr_model.fit(x_train, y_train)
 
@@ -72,7 +75,7 @@ def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collecte
     predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
 
     if meanbax_stuck(predicted_target_ids, collected_ids):
-        acquisition_function = mean_posterior_std
+        acquisition_function = mean_posterior_std(posterior_std)
     else:
         acquisition_function = np.zeros(x_domain.shape[0])
         acquisition_function[predicted_target_ids] = mean_posterior_std(posterior_std)[predicted_target_ids]
