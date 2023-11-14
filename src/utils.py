@@ -1,9 +1,10 @@
+from typing import List
 import numpy as np
 import pandas as pd
 from scipy.stats import hypergeom
 
 
-def XY_from_csv(path_to_csv, columns_x, columns_y):
+def XY_from_csv(path_to_csv: str, columns_x: List[str], columns_y: List[str]) -> tuple(np.ndarray, np.ndarray):
     # Load the data from the CSV file
     df = pd.read_csv(path_to_csv)
 
@@ -20,7 +21,7 @@ def XY_from_csv(path_to_csv, columns_x, columns_y):
     return X, y
 
 
-def random_sampling_no_replace(n_iterations, n_targets, iteration):
+def random_sampling_no_replace(n_iterations: int, n_targets: int, iteration: int) -> float:
     rv = hypergeom(M=n_iterations, n=n_targets, N=iteration)
     x = np.arange(0, n_targets + 1)  # all possible number of desired points obtained
     pmf = rv.pmf(x)
