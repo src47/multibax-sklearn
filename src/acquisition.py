@@ -2,14 +2,15 @@ from copy import deepcopy
 import numpy as np
 from tqdm import tqdm
 from src.models import MGPR
+from typing import List, Tuple
 
 
-def get_posterior_mean_and_std(x: np.ndarray, model: MGPR) -> tuple(np.ndarray, np.ndarray):
+def get_posterior_mean_and_std(x: np.ndarray, model: MGPR):
     posterior_mean, posterior_std = np.squeeze(model.predict(x, return_std=True))
     return posterior_mean, posterior_std
 
 
-def calculate_entropy(x: np.ndarray, model: MGPR) -> np.ndarray:
+def calculate_entropy(x: np.ndarray, model: MGPR):
     posterior_mean, posterior_std = get_posterior_mean_and_std(x, model)
     entropy = 0.5 * np.log(2 * np.pi * (posterior_std**2)) + 0.5
     return entropy

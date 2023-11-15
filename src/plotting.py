@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+from sklearn.manifold import TSNE
 
 
 def plot_iteration_results(
@@ -18,6 +19,11 @@ def plot_iteration_results(
 ):
     fig, axes = plt.subplots(4, 3, dpi=100, figsize=(18, 24))
     X_unnorm = x_scaler.inverse_transform(X)
+
+    if X_unnorm.shape[1] > 2:
+        tsne = TSNE(n_components=2)
+        X_unnorm = tsne.fit_transform(X_unnorm)  #
+
     axes[0, 0].scatter(X_unnorm[:, 0], X_unnorm[:, 1], color="blue", alpha=0.3)
     axes[0, 0].scatter(
         X_unnorm[true_target_ids, 0], X_unnorm[true_target_ids, 1], color="orange", marker="D", edgecolor="k"
@@ -42,29 +48,34 @@ def plot_iteration_results(
     axes[0, 2].set_xlabel("Posterior mean predicted targets (design space)")
 
     # Plotting in measured property space
-    Y_unnorm = y_scaler.inverse_transform(Y)
-    axes[1, 0].scatter(Y_unnorm[:, 0], Y_unnorm[:, 1], color="blue", alpha=0.1)
-    axes[1, 0].scatter(
-        Y_unnorm[true_target_ids, 0], Y_unnorm[true_target_ids, 1], color="orange", marker="D", edgecolor="k"
-    )
-    axes[1, 0].set_xlabel("Targets in measured property space")
+    try:
+        Y_unnorm = y_scaler.inverse_transform(Y)
+        axes[1, 0].scatter(Y_unnorm[:, 0], Y_unnorm[:, 1], color="blue", alpha=0.1)
+        axes[1, 0].scatter(
+            Y_unnorm[true_target_ids, 0], Y_unnorm[true_target_ids, 1], color="orange", marker="D", edgecolor="k"
+        )
+        axes[1, 0].set_xlabel("Targets in measured property space")
 
-    axes[1, 1].scatter(Y_unnorm[:, 0], Y_unnorm[:, 1], color="blue", alpha=0.1)
-    axes[1, 1].scatter(
-        Y_unnorm[true_target_ids, 0], Y_unnorm[true_target_ids, 1], color="orange", marker="D", edgecolor="k"
-    )
-    axes[1, 1].scatter(Y_unnorm[collected_ids, 0], Y_unnorm[collected_ids, 1], color="red", edgecolor="k")
-    axes[1, 1].scatter(Y_unnorm[collected_ids, 0][-1], Y_unnorm[collected_ids, 1][-1], color="purple", edgecolor="k")
-    axes[1, 1].set_xlabel("Sampling in measured property space")
+        axes[1, 1].scatter(Y_unnorm[:, 0], Y_unnorm[:, 1], color="blue", alpha=0.1)
+        axes[1, 1].scatter(
+            Y_unnorm[true_target_ids, 0], Y_unnorm[true_target_ids, 1], color="orange", marker="D", edgecolor="k"
+        )
+        axes[1, 1].scatter(Y_unnorm[collected_ids, 0], Y_unnorm[collected_ids, 1], color="red", edgecolor="k")
+        axes[1, 1].scatter(
+            Y_unnorm[collected_ids, 0][-1], Y_unnorm[collected_ids, 1][-1], color="purple", edgecolor="k"
+        )
+        axes[1, 1].set_xlabel("Sampling in measured property space")
 
-    axes[1, 2].scatter(Y_unnorm[:, 0], Y_unnorm[:, 1], color="blue", alpha=0.1)
-    axes[1, 2].scatter(
-        Y_unnorm[true_target_ids, 0], Y_unnorm[true_target_ids, 1], color="orange", marker="D", edgecolor="k"
-    )
-    axes[1, 2].scatter(
-        Y_unnorm[predicted_target_ids, 0], Y_unnorm[predicted_target_ids, 1], color="maroon", marker="x"
-    )
-    axes[1, 2].set_xlabel("Posterior mean predicted targets (measured property space)")
+        axes[1, 2].scatter(Y_unnorm[:, 0], Y_unnorm[:, 1], color="blue", alpha=0.1)
+        axes[1, 2].scatter(
+            Y_unnorm[true_target_ids, 0], Y_unnorm[true_target_ids, 1], color="orange", marker="D", edgecolor="k"
+        )
+        axes[1, 2].scatter(
+            Y_unnorm[predicted_target_ids, 0], Y_unnorm[predicted_target_ids, 1], color="maroon", marker="x"
+        )
+        axes[1, 2].set_xlabel("Posterior mean predicted targets (measured property space)")
+    except:
+        pass
 
     # Plotting acquisition function and terms
     axes[2, 0].scatter(X_unnorm[:, 0], X_unnorm[:, 1], c=acquisition_function)

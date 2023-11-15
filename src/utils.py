@@ -1,10 +1,10 @@
-from typing import List
+from typing import List, Tuple
 import numpy as np
 import pandas as pd
 from scipy.stats import hypergeom
 
 
-def XY_from_csv(path_to_csv: str, columns_x: List[str], columns_y: List[str]) -> tuple(np.ndarray, np.ndarray):
+def XY_from_csv(path_to_csv: str, columns_x: List[str], columns_y: List[str]):
     # Load the data from the CSV file
     df = pd.read_csv(path_to_csv)
 

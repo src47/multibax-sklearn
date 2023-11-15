@@ -14,7 +14,7 @@ class MGPR:
         for i, model in enumerate(self.models):
             model.fit(X, y[:, i])
 
-    def predict(self, X: np.ndarray, return_std: bool = True) -> tuple(np.ndarray, np.ndarray):
+    def predict(self, X: np.ndarray, return_std: bool = True):
         posterior_means = []
         posterior_stds = []
         for model in self.models:

@@ -77,3 +77,15 @@ class ParetoFront(SubsetAlgorithm):
         error_bars = self.tolerance_list * np.ones(np.array(y_unnorm).shape)
         desired_indices = obtain_discrete_pareto_optima(np.array(x_unnorm), np.array(y_unnorm), error_bars=error_bars)
         return np.array(desired_indices, dtype=int)
+
+
+class PercentileSet(SubsetAlgorithm):
+    def __init__(self, percentile_threshold, scalers):
+        super().__init__(scalers)
+        self.percentile_threshold = percentile_threshold
+
+    def identify_subspace(self, x, y):
+        x_unnorm, y_unnorm = super().unnormalize(x, y)
+        top_percentile_value = np.percentile(y_unnorm, self.percentile_threshold)
+        desired_indices = list(set(np.where(y_unnorm >= top_percentile_value)[0]))
+        return desired_indices
