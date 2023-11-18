@@ -1,6 +1,7 @@
 # Targeted materials discovery using Bayesian Algorithm Execution (sklearn-bax)
 
-[figure_2 (2).pdf](https://github.com/src47/sklearn-bax/files/13398889/figure_2.2.pdf)
+<img width="1103" alt="Screen Shot 2023-11-17 at 8 11 07 PM" src="https://github.com/src47/sklearn-bax/assets/39596225/beeb53e1-bbe6-47c8-89a4-fefb510143a9">
+
 
 This repo applies the Bayesian Algorithm Execution framework to the task of targeted and precise materials discovery. Users state their experimental goal as a simple algorithm which is automatically converted into a goal-align, intelligent data acquisition strategy. This framework applies to multiproperty measurements and goes beyond the capabilities of traditional multiobjective bayesian optimization algorithms. 
 
