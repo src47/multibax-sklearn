@@ -1,16 +1,16 @@
 # Targeted materials discovery using Bayesian Algorithm Execution (sklearn-bax)
 
-<img width="1103" alt="Screen Shot 2023-11-17 at 8 11 07 PM" src="https://github.com/src47/sklearn-bax/assets/39596225/beeb53e1-bbe6-47c8-89a4-fefb510143a9">
-
-
 This repo applies the Bayesian Algorithm Execution framework to the task of targeted and precise materials discovery. Users state their experimental goal as a simple algorithm which is automatically converted into a goal-align, intelligent data acquisition strategy. This framework applies to multiproperty measurements and goes beyond the capabilities of traditional multiobjective bayesian optimization algorithms. 
+
+
+<img width="1103" alt="Screen Shot 2023-11-17 at 8 11 07 PM" src="https://github.com/src47/sklearn-bax/assets/39596225/beeb53e1-bbe6-47c8-89a4-fefb510143a9">
 
 ## Installation
 
 1) Make a new local folder and clone the repository
 
 ```
-git clone https://github.com/src47/neural-representation-sqw.git
+git clone https://github.com/src47/sklearn-bax.git
 ```
 
 2) Install requirements
@@ -22,6 +22,7 @@ pip install -r requirements.txt
 ## Directories
 
 **src** 
+
 Contains the source code for the project:
 - src/acquisition: implementation of the three acquisition functions (InfoBAX, MeanBAX and SwitchBAX)
 - algorithms.py, helper_subspace_functions.py: implementation of various experimental goals as algorithms 
