@@ -1,14 +1,8 @@
-## Targeted materials discovery using Bayesian Algorithm Execution (sklearn implementation)
+# Targeted materials discovery using Bayesian Algorithm Execution (sklearn-bax)
 
-# sklearn-bax
-
-Implementation of Bayesian subset estimation using BAX 
+[figure_2 (2).pdf](https://github.com/src47/sklearn-bax/files/13398889/figure_2.2.pdf)
 
 This repo applies the Bayesian Algorithm Execution framework to the task of targeted and precise materials discovery. Users state their experimental goal as a simple algorithm which is automatically converted into a goal-align, intelligent data acquisition strategy. This framework applies to multiproperty measurements and goes beyond the capabilities of traditional multiobjective bayesian optimization algorithms. 
-
-## Capturing dynamical correlations using implicit neural representations
-
----
 
 ## Installation
 
@@ -22,12 +16,6 @@ git clone https://github.com/src47/neural-representation-sqw.git
 
 ```
 pip install -r requirements.txt
-```
-
-3) Make sure this repo directory is on the PYTHONPATH:
-
-```bash
-$ source shell/add_pwd_to_pythonpath.sh
 ```
 
 ## Directories
