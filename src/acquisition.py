@@ -6,7 +6,7 @@ from typing import List, Tuple
 
 
 def get_posterior_mean_and_std(x: np.ndarray, model: MGPR):
-    posterior_mean, posterior_std = np.squeeze(model.predict(x, return_std=True))
+    posterior_mean, posterior_std = np.squeeze(model.predict(x))
     return posterior_mean, posterior_std
 
 

@@ -10,11 +10,13 @@ from src.helper_subspace_functions import (
 
 class SubsetAlgorithm(abc.ABC):
     def __init__(self, scalers):
-        self.x_scaler = scalers[0]
-        self.y_scaler = scalers[1]
+        self.scalers = scalers
 
     def unnormalize(self, x, y):
-        return self.x_scaler.inverse_transform(x), self.y_scaler.inverse_transform(y)
+        y_scaler = self.scalers[1]
+        x_scaler = self.scalers[0]
+
+        return x_scaler.inverse_transform(x), y_scaler.inverse_transform(y)
 
     @abc.abstractmethod
     def identify_subspace(self, x, y):

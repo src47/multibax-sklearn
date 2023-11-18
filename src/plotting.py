@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 from sklearn.manifold import TSNE
+import ternary
 
 
 def plot_iteration_results(
@@ -139,3 +140,104 @@ def plot_final_metrics(n_iters, metrics, strategies, best_possible_n_obtained, r
 
     # Show the plots
     plt.show()
+
+
+def plot_algo_true_function(algorithm, X_unnorm, Y_unnorm, posterior_mean=None, posterior_samples=None):
+    target_subset_ids = algorithm.identify_subspace(X_unnorm, Y_unnorm)
+    target_y = Y_unnorm[target_subset_ids]
+
+    figure, ax = plt.subplots(figsize=(10 / 4, 10 / 4), dpi=200)
+    fig, tax = ternary.figure(ax)
+    x_all = np.hstack((X_unnorm, np.expand_dims(1 - np.sum(X_unnorm, axis=1), axis=-1)))
+
+    tax.scatter(x_all / 100, c="#5F9AFF", s=8, alpha=0.5, linewidth=0.1, edgecolor="k", label="All points")
+    tax.scatter(
+        x_all[target_subset_ids] / 100,
+        c="#FFD864",
+        s=10,
+        marker="D",
+        linewidth=0.25,
+        edgecolor="k",
+        label="Desired points",
+    )
+    if posterior_mean is not None:
+        posterior_mean_subset_ids = algorithm.identify_subspace(X_unnorm, posterior_mean)
+        tax.scatter(
+            x_all[posterior_mean_subset_ids] / 100,
+            c="maroon",
+            s=10,
+            marker="x",
+            linewidth=1.0,
+            edgecolor="k",
+            label="posterior mean points",
+        )
+
+    if posterior_samples is not None:
+        for i in range(posterior_samples.shape[-1]):
+            posterior_sample = posterior_samples[:, :, i]
+            posterior_sample_subset_ids = algorithm.identify_subspace(X_unnorm, posterior_sample)
+            tax.scatter(
+                x_all[posterior_sample_subset_ids] / 100,
+                s=10,
+                marker="x",
+                linewidth=1.0,
+                edgecolor="k",
+                label="posterior sample points",
+            )
+
+    tax.boundary(linewidth=1.0)
+    tax.clear_matplotlib_ticks()
+    tax.get_axes().axis("off")
+    plt.tight_layout()
+    tax.left_axis_label("Fe/Ni")
+    tax.right_axis_label("Fe/Co")
+    tax.bottom_axis_label("Ni/Co", position=(0.47, 0.05, 0))
+    tax.show()
+
+    if (posterior_samples is None) and (posterior_mean is None):
+        fig = plt.figure(dpi=185)
+        fig.set_figheight(10 / 4)
+        fig.set_figwidth(10 / 4)
+        plt.scatter(Y_unnorm[:, 0], Y_unnorm[:, 1], c="#5F9AFF", s=10, alpha=0.5, label="All design points")
+        plt.scatter(
+            target_y[:, 0],
+            target_y[:, 1],
+            c="#FFD864",
+            s=10,
+            linewidth=0.15,
+            marker="D",
+            edgecolor="k",
+            label="Target design points",
+        )
+
+        # if posterior_mean is not None:
+        #     posterior_mean_target_y = Y_unnorm[posterior_mean_subset_ids]
+        #     plt.scatter(
+        #         posterior_mean_target_y[:, 0],
+        #         posterior_mean_target_y[:, 1],
+        #         c="maroon",
+        #         s=10,
+        #         linewidth=1.0,
+        #         marker="x",
+        #         edgecolor="k",
+        #         label="Target design points",
+        #     )
+
+        # if posterior_samples is not None:
+        #     for i in range(posterior_samples.shape[-1]):
+        #         posterior_sample = posterior_samples[:, :, i]
+        #         posterior_sample_subset_ids = algorithm.identify_subspace(X_unnorm, posterior_sample)
+        #         posterior_sample_target_y = Y_unnorm[posterior_sample_subset_ids]
+        #         plt.scatter(
+        #             posterior_sample_target_y[:, 0],
+        #             posterior_sample_target_y[:, 1],
+        #             s=10,
+        #             linewidth=1.0,
+        #             marker="x",
+        #             edgecolor="k",
+        #             label="Target design points",
+        #         )
+
+        plt.xlabel("Coercivity (mT)")
+        plt.ylabel("Kerr Rotation (mrad)")
+        plt.show()

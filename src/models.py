@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import WhiteKernel, ConstantKernel, Matern
+from sklearn.gaussian_process.kernels import WhiteKernel, ConstantKernel, Matern, RBF
 
 
 class MGPR:
@@ -14,11 +14,11 @@ class MGPR:
         for i, model in enumerate(self.models):
             model.fit(X, y[:, i])
 
-    def predict(self, X: np.ndarray, return_std: bool = True):
+    def predict(self, X: np.ndarray):
         posterior_means = []
         posterior_stds = []
         for model in self.models:
-            posterior_mean, posterior_std = model.predict(X, return_std=return_std)
+            posterior_mean, posterior_std = model.predict(X, return_std=True)
             posterior_means.append(posterior_mean)
             posterior_stds.append(posterior_std)
         return np.array(posterior_means).T, np.array(posterior_stds).T
@@ -47,6 +47,7 @@ def fit_hypers(
         alpha = params["k1__k1__constant_value"]
         ls = params["k1__k2__length_scale"]
         noise = params["k2__noise_level"]
+
         k = ConstantKernel(constant_value=alpha, constant_value_bounds="fixed") * Matern(
             nu=5 / 2, length_scale=ls, length_scale_bounds="fixed"
         ) + WhiteKernel(noise, noise_level_bounds="fixed")
