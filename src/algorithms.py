@@ -1,6 +1,8 @@
 import numpy as np
 import abc
+
 from src.helper_subspace_functions import (
+    assert_sklearn_scalers,
     multi_level_region_union_Nd,
     multi_level_region_intersection_Nd,
     convert_y_for_optimization,
@@ -10,13 +12,15 @@ from src.helper_subspace_functions import (
 )
 
 
-class SubsetAlgorithm:
+class SubsetAlgorithm(abc.ABC):
     def __init__(self, user_algo_params):
         self.user_algo_params = user_algo_params
+        self.scalers = self.user_algo_params["scalers"]
+        assert_sklearn_scalers(self.scalers)
 
     def unnormalize(self, x, f_x):
-        y_scaler = self.user_algo_params["scalers"][1]
-        x_scaler = self.user_algo_params["scalers"][0]
+        y_scaler = self.scalers[1]
+        x_scaler = self.scalers[0]
         return x_scaler.inverse_transform(x), y_scaler.inverse_transform(f_x)
 
     def identify_subspace(self, f_x, x):
@@ -25,7 +29,7 @@ class SubsetAlgorithm:
         return list_of_target_indices
 
     @abc.abstractmethod
-    def user_algorithm(self, f_x, x, user_algo_params):
+    def user_algorithm(self, f_x, x):
         pass
 
 
@@ -39,7 +43,7 @@ class MultibandUnion(SubsetAlgorithm):
         return list_of_target_indices
 
 
-class MultibandUnionIntersection(SubsetAlgorithm):
+class MultibandIntersection(SubsetAlgorithm):
     def __init__(self, user_algo_params):
         super().__init__(user_algo_params)
 

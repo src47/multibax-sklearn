@@ -4,8 +4,18 @@ to define classes in bax_multiproperty_algorithms.py
 Mostly to seperate the individual algos and the internal 
 logic
 """
-import numpy as np
+
 from typing import List
+import numpy as np
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+
+# make sure scaler for normalization is correcty passed to subset algo class
+def assert_sklearn_scalers(scalers):
+    for scaler in scalers:
+        assert isinstance(
+            scaler, (StandardScaler, MinMaxScaler)
+        ), f"{type(scaler)} is not a valid scikit-learn scaler."
 
 
 # Implementation adapted from: https://stackoverflow.com/questions/32791911/fast-calculation-of-pareto-front-in-python (Peter)
