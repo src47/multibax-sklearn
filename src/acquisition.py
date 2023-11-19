@@ -33,7 +33,7 @@ def multiproperty_infobax(
     for i in tqdm(range(n_posterior_samples)) if verbose else range(n_posterior_samples):
         multi_gpr_model_fake = deepcopy(model)
         posterior_sample = posterior_samples[:, :, i]
-        predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_sample)
+        predicted_target_ids = algorithm.identify_subspace(f_x=posterior_sample, x=x_domain)
 
         # add in "hallucinated data" based on algorithm execution on posterior sample
         if len(predicted_target_ids) != 0:
@@ -73,7 +73,7 @@ def meanbax_stuck(predicted_target_ids, collected_ids):
 def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collected_ids):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
-    predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
+    predicted_target_ids = algorithm.identify_subspace(f_x=posterior_mean, x=x_domain)
     switch_strategy = False
     if meanbax_stuck(predicted_target_ids, collected_ids):
         switch_strategy = True
@@ -90,7 +90,7 @@ def multiproperty_switchbax(
 ):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
-    predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
+    predicted_target_ids = algorithm.identify_subspace(f_x=posterior_mean, x=x_domain)
     switch_strategy = False
 
     if epsilon_greedy_percentage != 0.0:

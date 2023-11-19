@@ -5,88 +5,122 @@ from src.helper_subspace_functions import (
     multi_level_region_intersection_Nd,
     convert_y_for_optimization,
     obtain_discrete_pareto_optima,
+    sublevelset,
+    discontinous_library_1d,
 )
 
 
-class SubsetAlgorithm(abc.ABC):
-    def __init__(self, scalers):
-        self.scalers = scalers
+class SubsetAlgorithm:
+    def __init__(self, user_algo_params):
+        self.user_algo_params = user_algo_params
 
-    def unnormalize(self, x, y):
-        y_scaler = self.scalers[1]
-        x_scaler = self.scalers[0]
+    def unnormalize(self, x, f_x):
+        y_scaler = self.user_algo_params["scalers"][1]
+        x_scaler = self.user_algo_params["scalers"][0]
+        return x_scaler.inverse_transform(x), y_scaler.inverse_transform(f_x)
 
-        return x_scaler.inverse_transform(x), y_scaler.inverse_transform(y)
+    def identify_subspace(self, f_x, x):
+        x_unnorm, f_x_unnorm = self.unnormalize(x, f_x)
+        list_of_target_indices = self.user_algorithm(f_x_unnorm, x_unnorm)
+        return list_of_target_indices
 
     @abc.abstractmethod
-    def identify_subspace(self, x, y):
+    def user_algorithm(self, f_x, x, user_algo_params):
         pass
 
 
-class MultiRegionSetUnion(SubsetAlgorithm):
-    def __init__(self, threshold_list, scalers):
-        super().__init__(scalers)
-        self.threshold_list = threshold_list
+class MultibandUnion(SubsetAlgorithm):
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
 
-    def identify_subspace(self, x, y):
-        x_unnorm, y_unnorm = super().unnormalize(x, y)
-        desired_indices = multi_level_region_union_Nd(y_unnorm, self.threshold_list)
-
-        return desired_indices
+    def user_algorithm(self, f_x, x):
+        threshold_bands = self.user_algo_params["threshold_bands"]
+        list_of_target_indices = multi_level_region_union_Nd(f_x, threshold_bands)
+        return list_of_target_indices
 
 
-class MultiRegionSetIntersection(SubsetAlgorithm):
-    def __init__(self, threshold_list, scalers):
-        super().__init__(scalers)
-        self.threshold_list = threshold_list
+class MultibandUnionIntersection(SubsetAlgorithm):
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
 
-    def identify_subspace(self, x, y):
-        x_unnorm, y_unnorm = super().unnormalize(x, y)
-        desired_indices = multi_level_region_intersection_Nd(y_unnorm, self.threshold_list)
-        return desired_indices
+    def user_algorithm(self, f_x, x):
+        threshold_bands = self.user_algo_params["threshold_bands"]
+        list_of_target_indices = multi_level_region_intersection_Nd(f_x, threshold_bands)
+        return list_of_target_indices
 
 
 class Wishlist(SubsetAlgorithm):
-    def __init__(self, threshold_bounds, scalers):
-        super().__init__(scalers)
-        self.threshold_bounds = threshold_bounds
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
 
-    def identify_subspace(self, x, y):
-        desired_indices = set()
-        for threshold_list in self.threshold_bounds:
-            multi_region = MultiRegionSetIntersection(threshold_list, self.scalers)
-            ids = multi_region.identify_subspace(x, y)
-            desired_indices = desired_indices.union(set(ids))
-        return list(desired_indices)
+    def user_algorithm(self, f_x, x):
+        threshold_bounds_list = self.user_algo_params["threshold_bounds_list"]
+        target_ids = set()
+
+        for threshold_list in threshold_bounds_list:
+            ids = multi_level_region_intersection_Nd(f_x, threshold_list)
+            target_ids = target_ids.union(set(ids))
+
+        return list(target_ids)
 
 
 class GlobalOptimization1D(SubsetAlgorithm):
-    def identify_subspace(self, x, y):
-        desired_indices = [np.argmax(y)]
-        return desired_indices
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
+
+    def user_algorithm(self, f_x, x):
+        maximize_fn = self.user_algo_params("maximize_fn")
+        if maximize_fn:
+            max_value = np.max(f_x)
+        elif maximize_fn is False:
+            max_value = np.max(-f_x)
+        else:
+            raise Exception("maximize_fn must be of type bool")
+        argmax_indices = np.where(f_x == max_value)[0]  # Get the indices where the values are equal to the maximum
+        return argmax_indices
 
 
 class ParetoFront(SubsetAlgorithm):
-    def __init__(self, tolerance_list, max_or_min_list, scalers):
-        super().__init__(scalers)
-        self.tolerance_list = tolerance_list
-        self.max_or_min_list = max_or_min_list
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
 
-    def identify_subspace(self, x, y):
-        x_unnorm, y_unnorm = super().unnormalize(x, y)
-        y_unnorm = convert_y_for_optimization(y_unnorm, self.max_or_min_list)
-        error_bars = self.tolerance_list * np.ones(np.array(y_unnorm).shape)
-        desired_indices = obtain_discrete_pareto_optima(np.array(x_unnorm), np.array(y_unnorm), error_bars=error_bars)
-        return np.array(desired_indices, dtype=int)
+    def user_algorithm(self, f_x, x):
+        max_or_min_list = self.user_algo_params["max_or_min_list"]
+        tolerance_list = self.user_algo_params["tolerance_list"]
+        f_x_converted = convert_y_for_optimization(f_x, max_or_min_list)
+        error_bars = tolerance_list * np.ones(np.array(f_x_converted).shape)
+        desired_indices = obtain_discrete_pareto_optima(np.array(x), np.array(f_x_converted), error_bars=error_bars)
+        return list(desired_indices, dtype=int)
 
 
-class PercentileSet(SubsetAlgorithm):
-    def __init__(self, percentile_threshold, scalers):
-        super().__init__(scalers)
-        self.percentile_threshold = percentile_threshold
+class PercentileSet1D(SubsetAlgorithm):
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
 
-    def identify_subspace(self, x, y):
-        x_unnorm, y_unnorm = super().unnormalize(x, y)
-        top_percentile_value = np.percentile(y_unnorm, self.percentile_threshold)
-        desired_indices = list(set(np.where(y_unnorm >= top_percentile_value)[0]))
-        return desired_indices
+    def user_algorithm(self, f_x, x):
+        percentile_threshold = self.user_algo_params["percentile_threshold"]
+        top_percentile_value = np.percentile(f_x, percentile_threshold)
+        target_ids = list(set(np.where(f_x >= top_percentile_value)[0]))
+        return target_ids
+
+
+class MonodisperseLibrary(SubsetAlgorithm):
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
+
+    def user_algorithm(self, f_x, x):
+        polysdispersity_threshold = self.user_algo_params["polysdispersity_threshold"]
+        target_radii_list = self.user_algo_params["target_radii_list"]
+        target_radii_tol = self.user_algo_params["target_radii_tol"]
+
+        y1 = np.array(f_x)[:, 0]
+        y2 = np.array(f_x)[:, 1]
+
+        # intersection of level set and disconnected list
+        intersect_id = list(
+            set(sublevelset(y2, polysdispersity_threshold)).intersection(
+                set(discontinous_library_1d(y1, target_radii_list, eps_vals=target_radii_tol))
+            )
+        )
+
+        return intersect_id

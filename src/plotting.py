@@ -144,7 +144,7 @@ def plot_final_metrics(n_iters, metrics, strategies, best_possible_n_obtained, r
 
 
 def plot_algo_true_function(algorithm, x_scaler, y_scaler, X, Y, posterior_mean=None, posterior_samples=None):
-    target_subset_ids = algorithm.identify_subspace(X, Y)
+    target_subset_ids = algorithm.identify_subspace(f_x=Y, x=X)
 
     X_unnorm = x_scaler.inverse_transform(X)
     Y_unnorm = y_scaler.inverse_transform(Y)
@@ -166,7 +166,7 @@ def plot_algo_true_function(algorithm, x_scaler, y_scaler, X, Y, posterior_mean=
         label="Desired points",
     )
     if posterior_mean is not None:
-        posterior_mean_subset_ids = algorithm.identify_subspace(X_unnorm, posterior_mean)
+        posterior_mean_subset_ids = algorithm.identify_subspace(f_x=posterior_mean, x=X_unnorm)
         tax.scatter(
             x_all[posterior_mean_subset_ids] / 100,
             c="maroon",
@@ -180,7 +180,7 @@ def plot_algo_true_function(algorithm, x_scaler, y_scaler, X, Y, posterior_mean=
     if posterior_samples is not None:
         for i in range(posterior_samples.shape[-1]):
             posterior_sample = posterior_samples[:, :, i]
-            posterior_sample_subset_ids = algorithm.identify_subspace(X_unnorm, posterior_sample)
+            posterior_sample_subset_ids = algorithm.identify_subspace(f_x=posterior_sample, x=X_unnorm)
             tax.scatter(
                 x_all[posterior_sample_subset_ids] / 100,
                 s=10,
@@ -215,34 +215,6 @@ def plot_algo_true_function(algorithm, x_scaler, y_scaler, X, Y, posterior_mean=
             label="Target design points",
         )
 
-        # if posterior_mean is not None:
-        #     posterior_mean_target_y = Y_unnorm[posterior_mean_subset_ids]
-        #     plt.scatter(
-        #         posterior_mean_target_y[:, 0],
-        #         posterior_mean_target_y[:, 1],
-        #         c="maroon",
-        #         s=10,
-        #         linewidth=1.0,
-        #         marker="x",
-        #         edgecolor="k",
-        #         label="Target design points",
-        #     )
-
-        # if posterior_samples is not None:
-        #     for i in range(posterior_samples.shape[-1]):
-        #         posterior_sample = posterior_samples[:, :, i]
-        #         posterior_sample_subset_ids = algorithm.identify_subspace(X_unnorm, posterior_sample)
-        #         posterior_sample_target_y = Y_unnorm[posterior_sample_subset_ids]
-        #         plt.scatter(
-        #             posterior_sample_target_y[:, 0],
-        #             posterior_sample_target_y[:, 1],
-        #             s=10,
-        #             linewidth=1.0,
-        #             marker="x",
-        #             edgecolor="k",
-        #             label="Target design points",
-        #         )
-
-        plt.xlabel("Coercivity (mT)")
-        plt.ylabel("Kerr Rotation (mrad)")
+        plt.xlabel("Material Property 1")
+        plt.ylabel("Material Property 2")
         plt.show()
