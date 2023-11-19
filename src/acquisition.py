@@ -74,22 +74,32 @@ def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collecte
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
     predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
-
+    switch_strategy = False
     if meanbax_stuck(predicted_target_ids, collected_ids):
+        switch_strategy = True
         acquisition_function = mean_posterior_std(posterior_std)
     else:
         acquisition_function = np.zeros(x_domain.shape[0])
         acquisition_function[predicted_target_ids] = mean_posterior_std(posterior_std)[predicted_target_ids]
 
-    return acquisition_function, model
+    return acquisition_function, model, switch_strategy
 
 
-def multiproperty_hybridbax(x_domain, x_train, y_train, model, algorithm, n_posterior_samples, collected_ids):
+def multiproperty_switchbax(
+    x_domain, x_train, y_train, model, algorithm, n_posterior_samples, collected_ids, epsilon_greedy_percentage=0.0
+):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
     predicted_target_ids = algorithm.identify_subspace(x=x_domain, y=posterior_mean)
+    switch_strategy = False
+
+    if epsilon_greedy_percentage != 0.0:
+        assert (epsilon_greedy_percentage >= 0) and (epsilon_greedy_percentage <= 1.0)
+        if np.random.rand() <= epsilon_greedy_percentage:
+            predicted_target_ids = []
 
     if meanbax_stuck(predicted_target_ids, collected_ids):
+        switch_strategy = True
         acquisition_function, model, term1, term2 = multiproperty_infobax(
             x_domain, x_train, y_train, model, algorithm, n_posterior_samples, verbose=False
         )
@@ -97,13 +107,22 @@ def multiproperty_hybridbax(x_domain, x_train, y_train, model, algorithm, n_post
         acquisition_function = np.zeros(x_domain.shape[0])
         acquisition_function[predicted_target_ids] = mean_posterior_std(posterior_std)[predicted_target_ids]
 
+    return acquisition_function, model, switch_strategy
+
+
+def multiproperty_us(x_domain, x_train, y_train, model):
+    model.fit(x_train, y_train)
+    posterior_mean, posterior_std = model.predict(x_domain)
+    acquisition_function = mean_posterior_std(posterior_std)
     return acquisition_function, model
 
 
 def run_acquisition(
     x_train, y_train, X, Y, strategy, algorithm, model, collected_ids, n_posterior_samples, prevent_requery=True
 ):
-    if strategy == "infobax":
+    switch_strategy = False
+
+    if strategy == "InfoBAX":
         acquisition_function, trained_model, term1, term2 = multiproperty_infobax(
             x_domain=X,
             x_train=x_train,
@@ -113,12 +132,12 @@ def run_acquisition(
             n_posterior_samples=n_posterior_samples,
             verbose=False,
         )
-    elif strategy == "meanbax":
-        acquisition_function, trained_model = multiproperty_meanbax(
+    elif strategy == "MeanBAX":
+        acquisition_function, trained_model, switch_strategy = multiproperty_meanbax(
             x_domain=X, x_train=x_train, y_train=y_train, model=model, algorithm=algorithm, collected_ids=collected_ids
         )
-    elif strategy == "mixed":
-        acquisition_function, trained_model = multiproperty_hybridbax(
+    elif strategy == "SwitchBAX":
+        acquisition_function, trained_model, switch_strategy = multiproperty_switchbax(
             x_domain=X,
             x_train=x_train,
             y_train=y_train,
@@ -126,6 +145,13 @@ def run_acquisition(
             algorithm=algorithm,
             n_posterior_samples=n_posterior_samples,
             collected_ids=collected_ids,
+        )
+    elif strategy == "US":
+        acquisition_function, trained_model = multiproperty_us(
+            x_domain=X,
+            x_train=x_train,
+            y_train=y_train,
+            model=model,
         )
     else:
         raise Exception("Unknown acquisition function")
@@ -141,7 +167,7 @@ def run_acquisition(
     x_train = np.vstack((x_train, x_next))
     y_train = np.vstack((y_train, y_next))
 
-    return x_train, y_train, trained_model, collected_ids, acquisition_function
+    return x_train, y_train, trained_model, collected_ids, acquisition_function, switch_strategy
 
 
 def optimize_acquisition_function(acquisition_function, collected_ids=None, prevent_requery=True):

@@ -50,7 +50,6 @@ class Wishlist(SubsetAlgorithm):
     def __init__(self, threshold_bounds, scalers):
         super().__init__(scalers)
         self.threshold_bounds = threshold_bounds
-        self.scalers = scalers
 
     def identify_subspace(self, x, y):
         desired_indices = set()

@@ -17,8 +17,9 @@ def plot_iteration_results(
     jaccard_posterior_list,
     best_possible_n_obtained,
     random_sampling,
+    n_initial,
 ):
-    fig, axes = plt.subplots(4, 3, dpi=100, figsize=(18, 24))
+    fig, axes = plt.subplots(3, 3, dpi=100, figsize=(18, 18))
     X_unnorm = x_scaler.inverse_transform(X)
 
     if X_unnorm.shape[1] > 2:
@@ -82,18 +83,18 @@ def plot_iteration_results(
     axes[2, 0].scatter(X_unnorm[:, 0], X_unnorm[:, 1], c=acquisition_function)
     axes[2, 0].set_xlabel("Acquisition Function")
 
-    axes[3, 0].plot(np.arange(0, len(n_obtained_list)), n_obtained_list, color="k")
-    axes[3, 0].plot(best_possible_n_obtained, color="r")
-    axes[3, 0].plot(random_sampling, color="r")
-    axes[3, 0].set_xlabel("Iteration Number")
-    axes[3, 0].set_ylabel("Number Obtained")
-    axes[3, 0].set_ylim(0, 1.1 * len(true_target_ids))
-    axes[3, 0].set_xlim(0, len(collected_ids) + 5)
+    axes[2, 1].plot(np.arange(n_initial, n_initial + len(n_obtained_list)), n_obtained_list, color="k")
+    axes[2, 1].plot(best_possible_n_obtained, color="r")
+    axes[2, 1].plot(random_sampling, color="r")
+    axes[2, 1].set_xlabel("Dataset Size")
+    axes[2, 1].set_ylabel("Number Obtained")
+    axes[2, 1].set_ylim(0, 1.1 * len(true_target_ids))
+    axes[2, 1].set_xlim(0, len(collected_ids) + 5)
 
-    axes[3, 1].axhline(y=1.0, color="r", linestyle="-")
-    axes[3, 1].plot(np.arange(0, len(jaccard_posterior_list)), jaccard_posterior_list, color="k")
-    axes[3, 1].set_xlabel("Iteration Number")
-    axes[3, 1].set_ylabel("Jaccard Posterior Index")
+    axes[2, 2].axhline(y=1.0, color="r", linestyle="--")
+    axes[2, 2].plot(np.arange(n_initial, n_initial + len(jaccard_posterior_list)), jaccard_posterior_list, color="k")
+    axes[2, 2].set_xlabel("Dataset Size")
+    axes[2, 2].set_ylabel("Jaccard Posterior Index")
 
     plt.show()
 
@@ -142,8 +143,12 @@ def plot_final_metrics(n_iters, metrics, strategies, best_possible_n_obtained, r
     plt.show()
 
 
-def plot_algo_true_function(algorithm, X_unnorm, Y_unnorm, posterior_mean=None, posterior_samples=None):
-    target_subset_ids = algorithm.identify_subspace(X_unnorm, Y_unnorm)
+def plot_algo_true_function(algorithm, x_scaler, y_scaler, X, Y, posterior_mean=None, posterior_samples=None):
+    target_subset_ids = algorithm.identify_subspace(X, Y)
+
+    X_unnorm = x_scaler.inverse_transform(X)
+    Y_unnorm = y_scaler.inverse_transform(Y)
+
     target_y = Y_unnorm[target_subset_ids]
 
     figure, ax = plt.subplots(figsize=(10 / 4, 10 / 4), dpi=200)
