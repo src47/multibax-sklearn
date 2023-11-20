@@ -26,7 +26,7 @@ class SubsetAlgorithm(abc.ABC):
     def identify_subspace(self, f_x, x):
         x_unnorm, f_x_unnorm = self.unnormalize(x, f_x)
         list_of_target_indices = self.user_algorithm(f_x_unnorm, x_unnorm)
-        return list_of_target_indices
+        return list(set(list_of_target_indices))  # ensure that the return is unique
 
     @abc.abstractmethod
     def user_algorithm(self, f_x, x):
@@ -73,6 +73,7 @@ class GlobalOptimization1D(SubsetAlgorithm):
         super().__init__(user_algo_params)
 
     def user_algorithm(self, f_x, x):
+        assert f_x.shape[1] == 1.0
         maximize_fn = self.user_algo_params("maximize_fn")
         if maximize_fn:
             max_value = np.max(f_x)
@@ -102,6 +103,7 @@ class PercentileSet1D(SubsetAlgorithm):
         super().__init__(user_algo_params)
 
     def user_algorithm(self, f_x, x):
+        assert f_x.shape[1] == 1.0
         percentile_threshold = self.user_algo_params["percentile_threshold"]
         top_percentile_value = np.percentile(f_x, percentile_threshold)
         target_ids = list(set(np.where(f_x >= top_percentile_value)[0]))
@@ -113,18 +115,16 @@ class MonodisperseLibrary(SubsetAlgorithm):
         super().__init__(user_algo_params)
 
     def user_algorithm(self, f_x, x):
-        polysdispersity_threshold = self.user_algo_params["polysdispersity_threshold"]
-        target_radii_list = self.user_algo_params["target_radii_list"]
-        target_radii_tol = self.user_algo_params["target_radii_tol"]
+        pd_threshold = self.user_algo_params["polysdispersity_threshold"]
+        radii_list = self.user_algo_params["target_radii_list"]
+        radii_tol = self.user_algo_params["target_radii_tol"]
 
         y1 = np.array(f_x)[:, 0]
         y2 = np.array(f_x)[:, 1]
 
         # intersection of level set and disconnected list
-        intersect_id = list(
-            set(sublevelset(y2, polysdispersity_threshold)).intersection(
-                set(discontinous_library_1d(y1, target_radii_list, eps_vals=target_radii_tol))
-            )
+        intersect_id = set(sublevelset(y2, pd_threshold)).intersection(
+            set(discontinous_library_1d(y1, radii_list, eps_vals=radii_tol))
         )
 
-        return intersect_id
+        return list(intersect_id)
