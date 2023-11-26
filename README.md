@@ -1,6 +1,6 @@
 # Targeted materials discovery using Bayesian Algorithm Execution (sklearn-bax)
 
-This repo applies the Bayesian Algorithm Execution framework to the task of targeted and precise materials discovery. Users state their experimental goal as a simple algorithm which is automatically converted into a goal-align, intelligent data acquisition strategy. This framework applies to multiproperty measurements and goes beyond the capabilities of traditional multiobjective bayesian optimization algorithms. 
+This repository implements various data acquisition strategies based on the Bayesian Algorithm Execution framework to enable precise, targeted materials discovery. Users state their experimental goal via a simple algorithm which is then automatically converted into goal-aligned, intelligent data acquisition strategies. This framework applies to mult-property measurements and goes beyond the capabilities of traditional multi-objective bayesian optimization. 
 
 
 <img width="1103" alt="Screen Shot 2023-11-17 at 8 11 07 PM" src="https://github.com/src47/sklearn-bax/assets/39596225/beeb53e1-bbe6-47c8-89a4-fefb510143a9">
@@ -10,7 +10,7 @@ This repo applies the Bayesian Algorithm Execution framework to the task of targ
 1) Make a new local folder and clone the repository
 
 ```
-git clone https://github.com/src47/sklearn-bax.git
+git clone https://github.com/src47/materials-bax-sklearn.git
 ```
 
 2) Install requirements
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 **src** 
 
 Contains the source code for the project:
-- src/acquisition: implementation of the three acquisition functions (InfoBAX, MeanBAX and SwitchBAX)
+- acquisition: implementation of the three acquisition functions (InfoBAX, MeanBAX and SwitchBAX)
 - algorithms.py, helper_subspace_functions.py: implementation of various experimental goals as algorithms 
 - metrics.py: implement of the n_obtained and jaccard_posterior_index metrics 
 - utils.py: misc
@@ -32,8 +32,13 @@ Contains the source code for the project:
 
 **datasets** 
 
-For ternary phase diagram data (cite), please use the following instructions:
+For ternary phase diagram dataset [1,2], please use the following instructions:
 - Download the data file "FeCoNi_benchmark_dataset_220501a.mat" from https://github.com/usnistgov/remi/tree/nist-pages/data/Combinatorial%20Libraries/Fe-Co-Ni and place it in the datasets directory. 
+
+Data Reference:
+
+[1] Yoo, Young-kook et al. “Identification of amorphous phases in the Fe–Ni–Co ternary alloy system using continuous phase diagram material [2] chips.” Intermetallics 14 (2006): 241-247 (https://www.sciencedirect.com/science/article/pii/S096697950500186X).
+Alex Wang, Haotong Liang, Austin McDannald, Ichiro Takeuchi, Aaron Gilad Kusne, Benchmarking active learning strategies for materials optimization and discovery, Oxford Open Materials Science, Volume 2, Issue 1, 2022, itac006, https://doi.org/10.1093/oxfmat/itac006 (https://academic.oup.com/ooms/article/2/1/itac006/6637521).
 
 **notebooks** 
 
