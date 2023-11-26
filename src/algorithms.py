@@ -74,7 +74,7 @@ class GlobalOptimization1D(SubsetAlgorithm):
 
     def user_algorithm(self, f_x, x):
         assert f_x.shape[1] == 1.0
-        maximize_fn = self.user_algo_params("maximize_fn")
+        maximize_fn = self.user_algo_params["maximize_fn"]
         if maximize_fn:
             max_value = np.max(f_x)
         elif maximize_fn is False:

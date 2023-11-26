@@ -70,6 +70,13 @@ def meanbax_stuck(predicted_target_ids, collected_ids):
     return (set(predicted_target_ids).issubset(collected_ids)) or (len(set(predicted_target_ids)) == 0)
 
 
+def singleproperty_ucb(x_domain, x_train, y_train, model, alpha=1.0):
+    model.fit(x_train, y_train)
+    posterior_mean, posterior_std = model.predict(x_domain)
+    acquisition_function = posterior_mean + alpha * posterior_std
+    return acquisition_function, model
+
+
 def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collected_ids):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
@@ -148,6 +155,13 @@ def run_acquisition(
         )
     elif strategy == "US":
         acquisition_function, trained_model = multiproperty_us(
+            x_domain=X,
+            x_train=x_train,
+            y_train=y_train,
+            model=model,
+        )
+    elif strategy == "UCB":
+        acquisition_function, trained_model = singleproperty_ucb(
             x_domain=X,
             x_train=x_train,
             y_train=y_train,

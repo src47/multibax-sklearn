@@ -32,7 +32,7 @@ class MGPR:
         return np.moveaxis(np.array(posterior_samples_list), 1, 0)
 
 
-def fit_hypers(
+def fit_matern_hypers(
     x_train: np.ndarray,
     y_train: np.ndarray,
     kernel_list: list,  # TODO list of what?
@@ -48,6 +48,7 @@ def fit_hypers(
         ls = params["k1__k2__length_scale"]
         noise = params["k2__noise_level"]
 
+        # this is neccesary to force all posterior samples to have the same hypers
         k = ConstantKernel(constant_value=alpha, constant_value_bounds="fixed") * Matern(
             nu=5 / 2, length_scale=ls, length_scale_bounds="fixed"
         ) + WhiteKernel(noise, noise_level_bounds="fixed")
