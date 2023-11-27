@@ -10,12 +10,18 @@ def get_posterior_mean_and_std(x: np.ndarray, model: MGPR):
     return posterior_mean, posterior_std
 
 
+def mean_posterior_std(posterior_std):
+    return np.mean(posterior_std, axis=-1)
+
+
+# Entropy of probabilistic model across design space
 def calculate_entropy(x: np.ndarray, model: MGPR):
     posterior_mean, posterior_std = get_posterior_mean_and_std(x, model)
     entropy = 0.5 * np.log(2 * np.pi * (posterior_std**2)) + 0.5
     return entropy
 
 
+# InfoBAX acquisition function
 def multiproperty_infobax(
     x_domain: np.ndarray, x_train: np.ndarray, y_train, model, algorithm, n_posterior_samples=20, verbose=False
 ):
@@ -62,14 +68,12 @@ def multiproperty_infobax(
     return acquisition_values, multi_gpr_model, term1, term2
 
 
-def mean_posterior_std(posterior_std):
-    return np.mean(posterior_std, axis=-1)
-
-
+# criteria to determine whether to switch from meanbax to either infobax or us
 def meanbax_stuck(predicted_target_ids, collected_ids):
     return (set(predicted_target_ids).issubset(collected_ids)) or (len(set(predicted_target_ids)) == 0)
 
 
+# UCB acquisition function
 def singleproperty_ucb(x_domain, x_train, y_train, model, alpha=1.0):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
@@ -77,6 +81,7 @@ def singleproperty_ucb(x_domain, x_train, y_train, model, alpha=1.0):
     return acquisition_function, model
 
 
+# MeanBAX acquisition function
 def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collected_ids):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
@@ -92,6 +97,7 @@ def multiproperty_meanbax(x_domain, x_train, y_train, model, algorithm, collecte
     return acquisition_function, model, switch_strategy
 
 
+# SwitchBAX acquisition function
 def multiproperty_switchbax(
     x_domain, x_train, y_train, model, algorithm, n_posterior_samples, collected_ids, epsilon_greedy_percentage=0.0
 ):
@@ -117,6 +123,7 @@ def multiproperty_switchbax(
     return acquisition_function, model, switch_strategy
 
 
+# US acquisition function
 def multiproperty_us(x_domain, x_train, y_train, model):
     model.fit(x_train, y_train)
     posterior_mean, posterior_std = model.predict(x_domain)
@@ -124,6 +131,7 @@ def multiproperty_us(x_domain, x_train, y_train, model):
     return acquisition_function, model
 
 
+# acquisition function pipeline code
 def run_acquisition(
     x_train, y_train, X, Y, strategy, algorithm, model, collected_ids, n_posterior_samples, prevent_requery=True
 ):
@@ -184,9 +192,12 @@ def run_acquisition(
     return x_train, y_train, trained_model, collected_ids, acquisition_function, switch_strategy
 
 
+# Find design point with max acquisition value
 def optimize_acquisition_function(acquisition_function, collected_ids=None, prevent_requery=True):
     if (prevent_requery) and (collected_ids is not None):
-        acquisition_function[collected_ids] = -np.inf
+        acquisition_function[
+            collected_ids
+        ] = -np.inf  # prevent requerying by setting acquisition vals -inf if collected
 
     next_id = np.argmax(acquisition_function)
     return next_id
