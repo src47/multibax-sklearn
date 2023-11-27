@@ -2,6 +2,7 @@ from typing import List, Tuple
 import numpy as np
 import pandas as pd
 from scipy.stats import hypergeom
+from scipy.io import loadmat
 
 
 def XY_from_csv(path_to_csv: str, columns_x: List[str], columns_y: List[str]):
@@ -27,3 +28,13 @@ def random_sampling_no_replace(n_iterations: int, n_targets: int, iteration: int
     pmf = rv.pmf(x)
     mean = np.sum(x * pmf)  # average number of desired points obtained
     return mean
+
+
+# load ternary data file
+def load_ternary_data(file):
+    data = loadmat(file)
+    X = data["C"][:, 0:2]  # only need 2 dimensions of composition since c3 = c2 + c1
+    Y1 = data["Coer"]  # magnetic property 1
+    Y2 = data["Kerr"]  # magnetic property 2
+    Y = np.hstack((Y1, Y2))
+    return X, Y
