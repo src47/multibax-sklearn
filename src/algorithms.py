@@ -14,15 +14,17 @@ from src.helper_subspace_functions import (
 
 class SubsetAlgorithm(abc.ABC):
     def __init__(self, user_algo_params):
-        self.user_algo_params = user_algo_params
-        self.scalers = self.user_algo_params["scalers"]
+        self.user_algo_params = user_algo_params  # parameters for user-specific algorithm
+        self.scalers = self.user_algo_params["scalers"]  # x, y sklearn standard scalers
         assert_sklearn_scalers(self.scalers)
 
+    # allow user to specify bound thresholds in unnormalized space
     def unnormalize(self, x, f_x):
         y_scaler = self.scalers[1]
         x_scaler = self.scalers[0]
         return x_scaler.inverse_transform(x), y_scaler.inverse_transform(f_x)
 
+    # executes the user-algorithm
     def identify_subspace(self, f_x, x):
         x_unnorm, f_x_unnorm = self.unnormalize(x, f_x)
         list_of_target_indices = self.user_algorithm(f_x_unnorm, x_unnorm)
@@ -34,6 +36,10 @@ class SubsetAlgorithm(abc.ABC):
 
 
 class MultibandUnion(SubsetAlgorithm):
+    """
+    Union of multiple level bands for each property
+    """
+
     def __init__(self, user_algo_params):
         super().__init__(user_algo_params)
 
@@ -44,6 +50,10 @@ class MultibandUnion(SubsetAlgorithm):
 
 
 class MultibandIntersection(SubsetAlgorithm):
+    """
+    Intersection of multiple level bands for each property
+    """
+
     def __init__(self, user_algo_params):
         super().__init__(user_algo_params)
 
@@ -54,6 +64,10 @@ class MultibandIntersection(SubsetAlgorithm):
 
 
 class Wishlist(SubsetAlgorithm):
+    """
+    Composition of multiple multibands
+    """
+
     def __init__(self, user_algo_params):
         super().__init__(user_algo_params)
 
@@ -69,6 +83,10 @@ class Wishlist(SubsetAlgorithm):
 
 
 class GlobalOptimization1D(SubsetAlgorithm):
+    """
+    Global optimization algorithm. This is similar to Entropy Search (ES) technique.
+    """
+
     def __init__(self, user_algo_params):
         super().__init__(user_algo_params)
 
@@ -99,6 +117,10 @@ class ParetoFront(SubsetAlgorithm):
 
 
 class PercentileSet1D(SubsetAlgorithm):
+    """
+    Algorithm which finds the top k% of points in a design space
+    """
+
     def __init__(self, user_algo_params):
         super().__init__(user_algo_params)
 
@@ -111,6 +133,10 @@ class PercentileSet1D(SubsetAlgorithm):
 
 
 class MonodisperseLibrary(SubsetAlgorithm):
+    """
+    Custom algorithm to find monodisperse nanoparticles with a variety of radii
+    """
+
     def __init__(self, user_algo_params):
         super().__init__(user_algo_params)
 
