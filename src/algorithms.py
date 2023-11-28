@@ -63,6 +63,22 @@ class MultibandIntersection(SubsetAlgorithm):
         return list_of_target_indices
 
 
+class ConditionalMultiband(SubsetAlgorithm):
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
+
+    def user_algorithm(self, f_x, x):
+        threshold_bands = self.user_algo_params["threshold_bands"]
+        list_of_target_indices = multi_level_region_intersection_Nd(f_x, threshold_bands)
+
+        # return a sublevel set in one property if the intersection is empty
+        if len(list_of_target_indices) == 0:
+            p2_min, p2_max = threshold_bands[1]
+            list_of_target_indices = sublevelset(f_x, p2_max)
+
+        return list_of_target_indices
+
+
 class Wishlist(SubsetAlgorithm):
     """
     Composition of multiple multibands
