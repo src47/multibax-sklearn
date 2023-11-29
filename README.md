@@ -44,7 +44,7 @@ Contains the source code for the project:
 
 Code and methodology in this repo builds on InfoBAX [1] and Multi-point BAX [2]
 
-[1] Neiswanger, Willie, Ke Alexander Wang, and Stefano Ermon. "Bayesian algorithm execution: Estimating computable properties of black-box functions using mutual information." International Conference on Machine Learning. PMLR, 2021.
+[1] Neiswanger, Willie, et al. "Bayesian algorithm execution: Estimating computable properties of black-box functions using mutual information." International Conference on Machine Learning. PMLR, 2021.
 
 [2] Miskovich, Sara A., et al. "Bayesian algorithm execution for tuning particle accelerator emittance with partial measurements." arXiv preprint arXiv:2209.04587 (2022).
 
