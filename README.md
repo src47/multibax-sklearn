@@ -34,12 +34,11 @@ We highly recommend reviewing the following tutorial notebooks before using BAX 
 
 **src** 
 
-Contains the source code for the project:
-- acquisition: implementation of the three acquisition functions (InfoBAX, MeanBAX and SwitchBAX)
-- algorithms.py, helper_subspace_functions.py: implementation of various experimental goals as algorithms 
-- metrics.py: implement of the n_obtained and jaccard_posterior_index metrics 
-- utils.py: misc
-- plotting.py: visualization code 
+Key files:
+
+- acquisition.py: Implementation of InfoBAX, MeanBAX, SwitchBAX and US. 
+- algorithms.py, helper_subspace_functions.py: Custom BAX algorithms for materials discovery. 
+- metrics.py: Implementation of the Number Obtained and Posterior Jaccard Index metrics. 
 
 ## References
 
