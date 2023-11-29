@@ -19,9 +19,9 @@ git clone https://github.com/src47/multibax-sklearn.git
 pip install -r requirements.txt
 ```
 
-**Notebooks** 
-
 ## Directories
+
+**Notebooks** 
 
 We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. 
 
