@@ -42,14 +42,10 @@ Contains the source code for the project:
 
 ## References
 
-Ternary phase diagram dataset used for benchmarking [1,2]:
+Code and methodology in this repo builds on InfoBAX [1] and Multi-point BAX [2]
 
-[1] Yoo, Young-kook et al. “Identification of amorphous phases in the Fe–Ni–Co ternary alloy system using continuous phase diagram material chips.” Intermetallics 14 (2006): 241-247.
-[2] Alex Wang, Haotong Liang, Austin McDannald, Ichiro Takeuchi, Aaron Gilad Kusne, Benchmarking active learning strategies for materials optimization and discovery, Oxford Open Materials Science, Volume 2, Issue 1, 2022, itac006, https://doi.org/10.1093/oxfmat/itac006.
+[1] Neiswanger, Willie, Ke Alexander Wang, and Stefano Ermon. "Bayesian algorithm execution: Estimating computable properties of black-box functions using mutual information." International Conference on Machine Learning. PMLR, 2021.
 
-Code and methodology in this repo builds on InfoBAX [3] and Multi-point BAX [4]
-
-[3] Neiswanger, Willie, Ke Alexander Wang, and Stefano Ermon. "Bayesian algorithm execution: Estimating computable properties of black-box functions using mutual information." International Conference on Machine Learning. PMLR, 2021.
-[4] Miskovich, Sara A., et al. "Bayesian algorithm execution for tuning particle accelerator emittance with partial measurements." arXiv preprint arXiv:2209.04587 (2022).
+[2] Miskovich, Sara A., et al. "Bayesian algorithm execution for tuning particle accelerator emittance with partial measurements." arXiv preprint arXiv:2209.04587 (2022).
 
 **Please direct any questions or comments to chitturi@stanford.edu, akashr@stanford.edu or wdn@stanford.edu. 
