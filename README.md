@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 ## Directories
 
-We highly recommend reviewing the following tutorial notebooks trying out BAX acquisition on custom tasks
+We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. 
 
 1) tutorial_1_expressing_a_goal_as_an_algorithm.ipynb: This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function as well as running an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
 
