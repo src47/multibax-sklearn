@@ -132,6 +132,24 @@ class ParetoFront(SubsetAlgorithm):
         return list(desired_indices)
 
 
+class ParetoPlusMultiband(SubsetAlgorithm):
+    def __init__(self, user_algo_params):
+        super().__init__(user_algo_params)
+
+    def user_algorithm(self, f_x, x):
+        max_or_min_list = self.user_algo_params["max_or_min_list"]
+        tolerance_list = self.user_algo_params["tolerance_list"]
+        threshold_bounds = self.user_algo_params["threshold_bounds"]
+
+        f_x_converted = convert_y_for_optimization(f_x, max_or_min_list)
+        error_bars = tolerance_list * np.ones(np.array(f_x_converted).shape)
+
+        t1 = obtain_discrete_pareto_optima(np.array(x), np.array(f_x_converted), error_bars=error_bars)
+        t2 = multi_level_region_intersection_Nd(f_x, threshold_bounds)
+
+        return list(set(t1).union(set(t2)))
+
+
 class PercentileSet1D(SubsetAlgorithm):
     """
     Algorithm which finds the top k% of points in a design space
