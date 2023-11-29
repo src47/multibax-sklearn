@@ -25,11 +25,11 @@ pip install -r requirements.txt
 
 We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. 
 
-1) tutorial_1_expressing_a_goal_as_an_algorithm.ipynb: This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function as well as running an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
+1) *tutorial_1_expressing_a_goal_as_an_algorithm.ipynb*: This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function as well as running an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
 
-2) tutorial_2_defining_metrics.ipynb: This notebook explains two metrics (n_obtained and posterior_jaccard_index) used to assess the quality of data acquisition. 
+2) *tutorial_2_defining_metrics.ipynb*: This notebook explains two metrics (n_obtained and posterior_jaccard_index) used to assess the quality of data acquisition. 
 
-3) tutorial_3_data_acquisition_using_BAX.ipynb: This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions in a ternary phase diagram. 
+3) *tutorial_3_data_acquisition_using_BAX.ipynb*: This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions in a ternary phase diagram. 
 
 
 **src** 
