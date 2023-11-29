@@ -13,9 +13,11 @@ This repository implements various Bayesian Algorithm Execution acquisition stra
 git clone https://github.com/src47/multibax-sklearn.git
 ```
 
-2) Install requirements
+2) Create a virtual environment and install requirements
 
 ```
+python3 -m venv .venv
+source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -42,7 +44,7 @@ Key files:
 
 ## References
 
-Code and methodology in this repo builds on InfoBAX [1] and Multi-point BAX [2]
+Methodology in this repo builds on InfoBAX [1] and Multi-point BAX [2]
 
 [1] Neiswanger, Willie, et al. "Bayesian algorithm execution: Estimating computable properties of black-box functions using mutual information." International Conference on Machine Learning. PMLR, 2021.
 
