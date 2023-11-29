@@ -50,4 +50,4 @@ Methodology in this repo builds on InfoBAX [1] and Multi-point BAX [2]
 
 [2] Miskovich, Sara A., et al. "Bayesian algorithm execution for tuning particle accelerator emittance with partial measurements." arXiv preprint arXiv:2209.04587 (2022).
 
-**Please direct any questions or comments to chitturi@stanford.edu, akashr@stanford.edu or wdn@stanford.edu. 
+**Please direct any questions or comments to chitturi@stanford.edu, akashr@stanford.edu or willie.neiswanger@gmail.com. 
