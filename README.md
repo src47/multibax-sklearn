@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 ## Directories
 
-**Notebooks** 
+**notebooks/tutorials** 
 
 We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. 
 
