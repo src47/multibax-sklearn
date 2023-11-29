@@ -58,8 +58,8 @@ class MultibandIntersection(SubsetAlgorithm):
         super().__init__(user_algo_params)
 
     def user_algorithm(self, f_x, x):
-        threshold_bands = self.user_algo_params["threshold_bands"]
-        list_of_target_indices = multi_level_region_intersection_Nd(f_x, threshold_bands)
+        threshold_bounds = self.user_algo_params["threshold_bounds"]
+        list_of_target_indices = multi_level_region_intersection_Nd(f_x, threshold_bounds)
         return list_of_target_indices
 
 
@@ -68,12 +68,12 @@ class ConditionalMultiband(SubsetAlgorithm):
         super().__init__(user_algo_params)
 
     def user_algorithm(self, f_x, x):
-        threshold_bands = self.user_algo_params["threshold_bands"]
-        list_of_target_indices = multi_level_region_intersection_Nd(f_x, threshold_bands)
+        threshold_bounds = self.user_algo_params["threshold_bounds"]
+        list_of_target_indices = multi_level_region_intersection_Nd(f_x, threshold_bounds)
 
         # return a sublevel set in one property if the intersection is empty
         if len(list_of_target_indices) == 0:
-            p2_min, p2_max = threshold_bands[1]
+            p2_min, p2_max = threshold_bounds[1]
             list_of_target_indices = sublevelset(f_x, p2_max)
 
         return list_of_target_indices
@@ -129,7 +129,7 @@ class ParetoFront(SubsetAlgorithm):
         f_x_converted = convert_y_for_optimization(f_x, max_or_min_list)
         error_bars = tolerance_list * np.ones(np.array(f_x_converted).shape)
         desired_indices = obtain_discrete_pareto_optima(np.array(x), np.array(f_x_converted), error_bars=error_bars)
-        return list(desired_indices, dtype=int)
+        return list(desired_indices)
 
 
 class PercentileSet1D(SubsetAlgorithm):
