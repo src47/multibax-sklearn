@@ -38,9 +38,9 @@ We highly recommend reviewing the following tutorial notebooks before using BAX 
 
 Key files:
 
-- acquisition.py: Implementation of InfoBAX, MeanBAX, SwitchBAX and US. 
-- algorithms.py, helper_subspace_functions.py: Custom BAX algorithms for materials discovery. 
-- metrics.py: Implementation of the Number Obtained and Posterior Jaccard Index metrics. 
+- *acquisition.py*: Implementation of InfoBAX, MeanBAX, SwitchBAX and US. 
+- *algorithms.py, helper_subspace_functions.py*: User algorithms for materials and chemical discovery. 
+- *metrics.py*: Implementation of the Number Obtained and Posterior Jaccard Index metrics. 
 
 ## References
 
