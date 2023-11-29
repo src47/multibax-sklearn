@@ -19,7 +19,9 @@ git clone https://github.com/src47/multibax-sklearn.git
 pip install -r requirements.txt
 ```
 
-## Notebooks 
+**Notebooks** 
+
+## Directories
 
 We highly recommend reviewing the following tutorial notebooks trying out BAX acquisition on custom tasks
 
@@ -29,7 +31,6 @@ We highly recommend reviewing the following tutorial notebooks trying out BAX ac
 
 3) tutorial_3_data_acquisition_using_BAX.ipynb: This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions in a ternary phase diagram. 
 
-## Directories
 
 **src** 
 
