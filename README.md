@@ -28,7 +28,7 @@ We highly recommend reviewing the following tutorial notebooks before using BAX 
 
 1) *notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb*: This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function.
 
-2) *notebooks/tutorials/utorial_2_algorithm_execution_surrogate_model.ipynb*: This notebook shows how to execute an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
+2) *notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb*: This notebook shows how to execute an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
 
 3) *notebooks/tutorials/tutorial_3_defining_metrics.ipynb*: This notebook explains two metrics (Number Obtained and Posterior Jaccard Index) used to assess the quality of data acquisition. 
 
