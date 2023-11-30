@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 **notebooks/tutorials** 
 
-We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. [tutorial 4](tutorial_4_data_acquisition_using_BAX.ipynb) contains a full working version of the content in the first three tutorials.
+We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. 
 
 1) *notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb*: This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function.
 
