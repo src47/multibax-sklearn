@@ -19,15 +19,15 @@ class SubsetAlgorithm(abc.ABC):
         assert_sklearn_scalers(self.scalers)
 
     # allow user to specify bound thresholds in unnormalized space
-    def unnormalize(self, x, f_x):
+    def unnormalize(self, f_x, x):
         y_scaler = self.scalers[1]
         x_scaler = self.scalers[0]
         return x_scaler.inverse_transform(x), y_scaler.inverse_transform(f_x)
 
     # executes the user-algorithm
     def identify_subspace(self, f_x, x):
-        x_unnorm, f_x_unnorm = self.unnormalize(x, f_x)
-        list_of_target_indices = self.user_algorithm(f_x_unnorm, x_unnorm)
+        x_unnorm, f_x_unnorm = self.unnormalize(f_x, x)
+        list_of_target_indices = self.user_algorithm(f_x=f_x_unnorm, x=x_unnorm)
         return list(set(list_of_target_indices))  # ensure that the return is unique
 
     @abc.abstractmethod
