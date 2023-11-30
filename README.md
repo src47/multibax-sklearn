@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10233974.svg)](https://doi.org/10.5281/zenodo.10233974)
+
 # Targeted materials discovery using Bayesian Algorithm Execution
 
 This repository implements various Bayesian Algorithm Execution acquisition strategies for precise, targeted chemical and materials discovery. Users state their experimental goal via a simple algorithm which is then automatically converted into goal-aligned, intelligent data acquisition strategies. This framework applies to multi-property measurements and goes beyond the capabilities of traditional multi-objective bayesian optimization.
