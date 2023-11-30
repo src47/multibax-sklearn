@@ -25,15 +25,15 @@ pip install -r requirements.txt
 
 **notebooks/tutorials** 
 
-We highly recommend reviewing the following tutorial notebooks (in order) before using BAX acquisition functions for specific experimental goals. 
+We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. [tutorial 4](tutorial_4_data_acquisition_using_BAX.ipynb) contains a full working version of the content in the first three tutorials.
 
-1) [tutorial 1](tutorial_1_expressing_a_goal_as_an_algorithm.ipynb): This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function.
+1) *notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb*: This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function.
 
-2) [tutorial 2](tutorial_2_algorithm_execution_surrogate_model.ipynb): This notebook shows how to execute an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
+2) *notebooks/tutorials/utorial_2_algorithm_execution_surrogate_model.ipynb*: This notebook shows how to execute an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
 
-3) [tutorial 3](tutorial_3_defining_metrics.ipynb): This notebook explains two metrics (Number Obtained and Posterior Jaccard Index) used to assess the quality of data acquisition. 
+3) *notebooks/tutorials/tutorial_3_defining_metrics.ipynb*: This notebook explains two metrics (Number Obtained and Posterior Jaccard Index) used to assess the quality of data acquisition. 
 
-4) [tutorial 4](tutorial_4_data_acquisition_using_BAX.ipynb): This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions for a magnetic materials characterization dataset. 
+4) *notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb*: This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions for a magnetic materials characterization dataset. 
 
 
 **src** 
