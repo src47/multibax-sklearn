@@ -29,14 +29,12 @@ We highly recommend reviewing the following tutorial notebooks before using BAX 
 
 1) *tutorial_1_expressing_a_goal_as_an_algorithm.ipynb*: This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function as well as running an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
 
-2) *tutorial_2_defining_metrics.ipynb*: This notebook explains two metrics (n_obtained and posterior_jaccard_index) used to assess the quality of data acquisition. 
+2) *tutorial_2_defining_metrics.ipynb*: This notebook explains two metrics (Number Obtained and Posterior Jaccard Index) used to assess the quality of data acquisition. 
 
-3) *tutorial_3_data_acquisition_using_BAX.ipynb*: This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions in a ternary phase diagram. 
+3) *tutorial_3_data_acquisition_using_BAX.ipynb*: This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions for a magnetic materials characterization dataset. 
 
 
 **src** 
-
-Key files:
 
 - *acquisition.py*: Implementation of InfoBAX, MeanBAX, SwitchBAX and US. 
 - *algorithms.py, helper_subspace_functions.py*: User algorithms for materials and chemical discovery. 
@@ -44,7 +42,7 @@ Key files:
 
 ## Citation
 
-Please cite "_Targeted materials discovery using Bayesian algorithm execution_" (arxiv link to come) if this repository was useful to your research!
+Please cite "_Targeted materials discovery using Bayesian algorithm execution_" (arxiv link to come!) if this repository was useful to your research.
 
 ## References
 
