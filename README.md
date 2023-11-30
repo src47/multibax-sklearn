@@ -2,7 +2,7 @@
 
 # Targeted materials discovery using Bayesian Algorithm Execution
 
-This repository implements various Bayesian Algorithm Execution acquisition strategies for precise, targeted chemical and materials discovery. Users state their experimental goal via a simple algorithm which is then automatically converted into a goal-aligned, intelligent data acquisition strategy. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization.
+This repository implements various Bayesian Algorithm Execution (BAX) acquisition strategies for precise, targeted chemical and materials discovery. Users state their experimental goal via a simple algorithm which is then automatically converted into a goal-aligned, intelligent data acquisition strategy. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization.
 
 <img width="1103" alt="Screen Shot 2023-11-17 at 8 11 07 PM" src="https://github.com/src47/sklearn-bax/assets/39596225/beeb53e1-bbe6-47c8-89a4-fefb510143a9">
 
