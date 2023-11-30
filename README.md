@@ -42,6 +42,10 @@ Key files:
 - *algorithms.py, helper_subspace_functions.py*: User algorithms for materials and chemical discovery. 
 - *metrics.py*: Implementation of the Number Obtained and Posterior Jaccard Index metrics. 
 
+## Citation
+
+Please cite "_Targeted materials discovery using Bayesian algorithm execution_" (arxiv link to come) if this repository was useful to your research!
+
 ## References
 
 Methodology in this repo builds on InfoBAX [1] and Multi-point BAX [2]
