@@ -1,4 +1,4 @@
-# Targeted materials discovery using Bayesian Algorithm Execution (sklearn-bax)
+# Targeted materials discovery using Bayesian Algorithm Execution
 
 This repository implements various Bayesian Algorithm Execution acquisition strategies for precise, targeted chemical and materials discovery. Users state their experimental goal via a simple algorithm which is then automatically converted into goal-aligned, intelligent data acquisition strategies. This framework applies to multi-property measurements and goes beyond the capabilities of traditional multi-objective bayesian optimization strategies which specifically target Pareto front estimation. 
 
