@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10233974.svg)](https://doi.org/10.5281/zenodo.10233974)
+[![DOI](https://zenodo.org/badge/713948168.svg)](https://zenodo.org/doi/10.5281/zenodo.10233973)
 
 # Multi-property Bayesian algorithm execution using sklearn
 
