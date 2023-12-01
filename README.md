@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10233974.svg)](https://doi.org/10.5281/zenodo.10233974)
 
-# Sklearn implementation of multi-property Bayesian algorithm execution
+# Multi-property Bayesian algorithm execution using sklearn
 
 This repository implements various Bayesian Algorithm Execution (BAX) acquisition strategies for precise, targeted chemical and materials discovery. Users state their experimental goal via a simple filtering algorithm which is then automatically converted into a goal-aligned, intelligent data acquisition strategy. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization.
 
