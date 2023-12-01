@@ -15,8 +15,7 @@ This repository implements various Bayesian algorithm execution (BAX) acquisitio
 
 <img width="1356" alt="Screen Shot 2023-12-01 at 6 57 55 AM" src="https://github.com/src47/multibax-sklearn/assets/39596225/88f9cdcd-144b-4f05-8e4d-bbddf604e7cd">
 
-We provide a series of tutorials ([![Tutorial 1](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/src47/multibax-sklearn/blob/main/notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb
-), [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb), [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb) and [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb)) as guidance. 
+We provide a series of tutorials ([tutorial 1](notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb), [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb), [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb) and [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb)) as guidance. 
 
 ## Installation
 
