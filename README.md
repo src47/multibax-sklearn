@@ -2,11 +2,17 @@
 
 # Multi-property Bayesian algorithm execution using sklearn
 
-This repository implements various Bayesian Algorithm Execution (BAX) acquisition strategies for precise, targeted chemical and materials discovery. It enables a user to quickly isolate portions of a design space that meet highly customized goals. Scientific applications include finding the _set_ of all compounds which have properties which fall in a band of values (level band) or which fall in the _top k percentile_ (percentile band), identifying synthesis conditions that produce monodisperse nanoparticles with multiple precisely specified particle sizes, and finding chemically diverse sets of ligands that are strong, non-toxic binders.
+This repository implements various Bayesian algorithm execution (BAX) acquisition strategies for precise, targeted chemical and materials discovery. It enables a user to quickly isolate portions of a design space that meet highly customized goals. Scientific applications include finding the _set_ of all compounds which have properties which fall in a band of values (level band) or which fall in the _top k percentile_ (percentile band), identifying synthesis conditions that produce monodisperse nanoparticles with multiple precisely specified particle sizes, and finding chemically diverse sets of ligands that are strong, non-toxic binders. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization. 
 
-Users state their experimental goal via a simple filtering algorithm which is then **automatically** converted into a goal-aligned, intelligent data acquisition strategy. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization. We provide a series of tutorials ([tutorial 1](notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb), [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb), [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb) and [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb)) as guidance. 
+Users state their experimental goal via a simple filtering algorithm which is able to return the correct subset of the design space *if the true underlying mapping were known* (A). 
 
-<img width="1103" alt="Screen Shot 2023-11-17 at 8 11 07 PM" src="https://github.com/src47/sklearn-bax/assets/39596225/beeb53e1-bbe6-47c8-89a4-fefb510143a9">
+<img width="2033" alt="Screen Shot 2023-11-30 at 6 59 10 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/2bb3c2d8-5d83-4aa5-b966-4a52a8f6ce36">
+
+The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping via intelligent sampling and **automatically** creates a goal-aligned, data acquisition strategy (B-D). 
+
+<img width="2004" alt="Screen Shot 2023-11-30 at 6 59 22 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/21442a75-dd74-4690-aa51-751ab470a6a2">
+
+We provide a series of tutorials ([tutorial 1](notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb), [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb), [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb) and [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb)) as guidance. 
 
 ## Installation
 
