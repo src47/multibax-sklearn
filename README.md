@@ -15,8 +15,6 @@ This repository implements various Bayesian algorithm execution (BAX) acquisitio
 
 <img width="1356" alt="Screen Shot 2023-12-01 at 6 57 55 AM" src="https://github.com/src47/multibax-sklearn/assets/39596225/88f9cdcd-144b-4f05-8e4d-bbddf604e7cd">
 
-We provide a series of tutorials ([tutorial 1](notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb), [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb), [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb) and [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb)) as guidance. 
-
 ## Installation
 
 1) Make a new local folder and clone the repository
@@ -39,15 +37,15 @@ pip install -r requirements.txt
 
 We highly recommend reviewing the following tutorial notebooks before using BAX acquisition functions for specific experimental goals. Note, [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb) contains a full pipeline of data acquisition using BAX. 
 
-1) [tutorial 1](notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb): This notebook explains how to pose an experimental goal as an algorithm and showcases running an algorithm on the ground-truth function.
+1) [tutorial 1](notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb): Expressing a user experimental goal as an algorithm and executing the algorithm on the true underlying function. 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/src47/multibax-sklearn/blob/main/notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb
 )
-2) [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb): This notebook shows how to execute an algorithm on posterior draws from a trained surrogate Gaussian Process model. 
+2) [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb): Executing an algorithm on posterior draws from a trained surrogate Gaussian process model. 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/src47/multibax-sklearn/blob/main/notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb
 )
-3) [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb): This notebook explains two metrics (Number Obtained and Posterior Jaccard Index) used to assess the quality of data acquisition. 
+3) [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb): Defining metrics to quantify data acquisition quality: Number Obtained and Posterior Jaccard Index.
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/src47/multibax-sklearn/blob/main/notebooks/tutorials/tutorial_3_defining_metrics.ipynb)
-4) [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb): This notebook demonstrates using InfoBAX, MeanBAX and SwitchBAX to find a "wishlist" of regions for a magnetic materials characterization dataset. 
+4) [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb): Using BAX strategies (InfoBAX, MeanBAX and SwitchBAX) to find a "wishlist" of regions in a magnetic alloys dataset. 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/src47/multibax-sklearn/blob/main/notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb)
 
 **src** 
