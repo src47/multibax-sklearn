@@ -2,7 +2,7 @@
 
 # Multi-property Bayesian algorithm execution using sklearn
 
-This repository implements various Bayesian algorithm execution (BAX) acquisition strategies for precise, targeted chemical and materials discovery. It enables a user to quickly isolate portions of a design space that meet highly customized goals. Scientific applications include finding the _set of all_ compounds which have measured properties that fall within a band of values (level band) or which fall in the _top k percentile_ (percentile band) of a dataset, identifying synthesis conditions that produce monodisperse nanoparticles with multiple precisely specified particle sizes, and finding chemically diverse sets of ligands that are strong, non-toxic binders. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization. 
+This repository implements various Bayesian algorithm execution (BAX) acquisition strategies for precise, targeted chemical and materials discovery. It enables a user to quickly isolate portions of a design space that meet highly customized goals. Scientific applications include finding the _set of all_ compounds which have measured properties that fall within a band of values (level band) or which fall in the top k percentile of a dataset (percentile band), identifying synthesis conditions that produce monodisperse nanoparticles with multiple precisely specified particle sizes, and finding chemically diverse sets of ligands that are strong, non-toxic binders. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization. 
 
 ## Description
 
@@ -11,7 +11,7 @@ This repository implements various Bayesian algorithm execution (BAX) acquisitio
 <img width="1355" alt="Screen Shot 2023-12-01 at 6 57 37 AM" src="https://github.com/src47/multibax-sklearn/assets/39596225/38d7c0b6-a1ec-47b6-b299-7b396e999d75">
 
 
-:mechanical_arm: The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping and **automatically** creates a goal-aligned, data acquisition strategy (**B-D**). 
+:mechanical_arm: The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping and automatically creates a goal-aligned, data acquisition strategy (**B-D**). 
 
 <img width="1356" alt="Screen Shot 2023-12-01 at 6 57 55 AM" src="https://github.com/src47/multibax-sklearn/assets/39596225/88f9cdcd-144b-4f05-8e4d-bbddf604e7cd">
 
