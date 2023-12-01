@@ -10,7 +10,7 @@ This repository implements various Bayesian algorithm execution (BAX) acquisitio
 <img width="2033" alt="Screen Shot 2023-11-30 at 6 59 10 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/2bb3c2d8-5d83-4aa5-b966-4a52a8f6ce36">
 
 
-:mechanical_arm: The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping via intelligent sampling and **automatically** creates a goal-aligned, data acquisition strategy (**B-D**). 
+:mechanical_arm: The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping and **automatically** creates a goal-aligned, data acquisition strategy (**B-D**). 
 
 
 <img width="2004" alt="Screen Shot 2023-11-30 at 6 59 22 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/21442a75-dd74-4690-aa51-751ab470a6a2">
