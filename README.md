@@ -8,14 +8,12 @@ This repository implements various Bayesian algorithm execution (BAX) acquisitio
 
 :writing_hand: Users state their experimental goal via a simple filtering algorithm which is able to return the correct subset of the design space *if the true underlying mapping were known* (**A**). 
 
-
-<img width="2033" alt="Screen Shot 2023-11-30 at 6 59 10 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/2bb3c2d8-5d83-4aa5-b966-4a52a8f6ce36">
+<img width="1355" alt="Screen Shot 2023-12-01 at 6 57 37 AM" src="https://github.com/src47/multibax-sklearn/assets/39596225/38d7c0b6-a1ec-47b6-b299-7b396e999d75">
 
 
 :mechanical_arm: The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping and **automatically** creates a goal-aligned, data acquisition strategy (**B-D**). 
 
-
-<img width="2004" alt="Screen Shot 2023-11-30 at 6 59 22 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/21442a75-dd74-4690-aa51-751ab470a6a2">
+<img width="1356" alt="Screen Shot 2023-12-01 at 6 57 55 AM" src="https://github.com/src47/multibax-sklearn/assets/39596225/88f9cdcd-144b-4f05-8e4d-bbddf604e7cd">
 
 We provide a series of tutorials ([tutorial 1](notebooks/tutorials/tutorial_1_expressing_a_goal_as_an_algorithm.ipynb), [tutorial 2](notebooks/tutorials/tutorial_2_algorithm_execution_surrogate_model.ipynb), [tutorial 3](notebooks/tutorials/tutorial_3_defining_metrics.ipynb) and [tutorial 4](notebooks/tutorials/tutorial_4_data_acquisition_using_BAX.ipynb)) as guidance. 
 
