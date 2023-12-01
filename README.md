@@ -4,11 +4,14 @@
 
 This repository implements various Bayesian algorithm execution (BAX) acquisition strategies for precise, targeted chemical and materials discovery. It enables a user to quickly isolate portions of a design space that meet highly customized goals. Scientific applications include finding the _set_ of all compounds which have properties which fall in a band of values (level band) or which fall in the _top k percentile_ (percentile band), identifying synthesis conditions that produce monodisperse nanoparticles with multiple precisely specified particle sizes, and finding chemically diverse sets of ligands that are strong, non-toxic binders. This framework applies to multi-property measurements and goes beyond the capabilities of multi-objective bayesian optimization. 
 
-Users state their experimental goal via a simple filtering algorithm which is able to return the correct subset of the design space *if the true underlying mapping were known* (A). 
+:writing_hand: Users state their experimental goal via a simple filtering algorithm which is able to return the correct subset of the design space *if the true underlying mapping were known* (A). 
+
 
 <img width="2033" alt="Screen Shot 2023-11-30 at 6 59 10 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/2bb3c2d8-5d83-4aa5-b966-4a52a8f6ce36">
 
-The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping via intelligent sampling and **automatically** creates a goal-aligned, data acquisition strategy (B-D). 
+
+:mechanical_arm: The Bayesian algorithm execution procedure circumvents needing to actually know the true underlying mapping via intelligent sampling and **automatically** creates a goal-aligned, data acquisition strategy (B-D). 
+
 
 <img width="2004" alt="Screen Shot 2023-11-30 at 6 59 22 PM" src="https://github.com/src47/multibax-sklearn/assets/39596225/21442a75-dd74-4690-aa51-751ab470a6a2">
 
