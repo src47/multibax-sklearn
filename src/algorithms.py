@@ -44,8 +44,8 @@ class MultibandUnion(SubsetAlgorithm):
         super().__init__(user_algo_params)
 
     def user_algorithm(self, f_x, x):
-        threshold_bands = self.user_algo_params["threshold_bands"]
-        list_of_target_indices = multi_level_region_union_Nd(f_x, threshold_bands)
+        threshold_bounds = self.user_algo_params["threshold_bounds"]
+        list_of_target_indices = multi_level_region_union_Nd(f_x, threshold_bounds)
         return list_of_target_indices
 
 
