@@ -53,7 +53,7 @@ We highly recommend reviewing the following tutorial notebooks before using BAX 
 
 ## Citation
 
-Please cite [Targeted materials discovery using Bayesian algorithm execution](https://github.com/src47/src47.github.io/blob/master/Papers/materials_bax_manuscript.pdf) if this repository was useful to your research.
+Please cite [Targeted materials discovery using Bayesian algorithm execution](https://arxiv.org/abs/2312.16078) if this repository was useful to your research.
 
 ## References
 
