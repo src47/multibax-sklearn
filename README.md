@@ -53,7 +53,22 @@ We highly recommend reviewing the following tutorial notebooks before using BAX 
 
 ## Citation
 
-Please cite [Targeted materials discovery using Bayesian algorithm execution](https://arxiv.org/abs/2312.16078) if this repository was useful to your research.
+## Citation
+Please cite our paper: [Targeted materials discovery using Bayesian algorithm execution](https://www.nature.com/articles/s41524-024-01326-2) if you find this project
+helpful:
+
+```
+@article{chitturi2024targeted,
+  title={Targeted materials discovery using Bayesian algorithm execution},
+  author={Chitturi, Sathya R and Ramdas, Akash and Wu, Yue and Rohr, Brian and Ermon, Stefano and Dionne, Jennifer and Jornada, Felipe H da and Dunne, Mike and Tassone, Christopher and Neiswanger, Willie and Ratner, Daniel},
+  journal={npj Computational Materials},
+  volume={10},
+  number={1},
+  pages={156},
+  year={2024},
+  publisher={Nature Publishing Group UK London}
+}
+```
 
 ## References
 
