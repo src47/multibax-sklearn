@@ -52,8 +52,6 @@ We highly recommend reviewing the following tutorial notebooks before using BAX 
 - *metrics.py*: Implementation of the Number Obtained and Posterior Jaccard Index metrics. 
 
 ## Citation
-
-## Citation
 Please cite our paper: [Targeted materials discovery using Bayesian algorithm execution](https://www.nature.com/articles/s41524-024-01326-2) if you find this project
 helpful:
 
