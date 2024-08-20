@@ -74,6 +74,6 @@ Methodology in this repo builds on InfoBAX [1] and Multi-point BAX [2]
 
 [1] Neiswanger, Willie, et al. "Bayesian algorithm execution: Estimating computable properties of black-box functions using mutual information." International Conference on Machine Learning. PMLR, 2021.
 
-[2] Miskovich, Sara A., et al. "Bayesian algorithm execution for tuning particle accelerator emittance with partial measurements." arXiv preprint arXiv:2209.04587 (2022).
+[2] Miskovich, Sara and Neiswanger, Willie et al. "Multipoint-BAX: a new approach for efficiently tuning particle accelerator emittance via virtual objectives." MLST (2024).
 
-**Please direct any questions or comments to chitturi@stanford.edu, akashr@stanford.edu or willie.neiswanger@gmail.com. 
+**Please direct any questions or comments to chitturi@alumni.stanford.edu, akashr@stanford.edu or willie.neiswanger@gmail.com. 
