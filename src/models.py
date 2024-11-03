@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import WhiteKernel, ConstantKernel, Matern, RBF
+import pickle
 
 
 class MGPR:
@@ -8,9 +9,14 @@ class MGPR:
     Class for multiple independent sklearn Gaussian Process Regression models.
     """
 
-    def __init__(self, kernel_list: list, n_restarts_optimizer: int = 1):  # TODO a list of what?
+    def __init__(
+        self, kernel_list: list, n_restarts_optimizer: int = 1
+    ):  # TODO a list of what?
         self.models = [
-            GaussianProcessRegressor(kernel=k, n_restarts_optimizer=n_restarts_optimizer) for k in kernel_list
+            GaussianProcessRegressor(
+                kernel=k, n_restarts_optimizer=n_restarts_optimizer
+            )
+            for k in kernel_list
         ]
 
     def fit(self, X: np.ndarray, y: np.ndarray):
@@ -38,6 +44,27 @@ class MGPR:
         posterior_samples_array = np.moveaxis(np.array(posterior_samples_list), 1, 0)
 
         return posterior_samples_array
+
+    def save(self, filename):
+        print(f"Saving class instance to {filename}...")
+        try:
+            with open(filename, "wb") as f:
+                pickle.dump(self, f)
+            print("Class instance saved successfully!")
+        except Exception as e:
+            print(f"Failed to save class instance: {e}")
+
+    @classmethod
+    def load(cls, filename):
+        print(f"Loading class instance from {filename}...")
+        try:
+            with open(filename, "rb") as f:
+                instance = pickle.load(f)
+            print("Class instance loaded successfully!")
+            return instance
+        except Exception as e:
+            print(f"Failed to load class instance: {e}")
+            return None
 
 
 def fit_matern_hypers(
@@ -67,9 +94,16 @@ def fit_matern_hypers(
         noise = params["k2__noise_level"]  # likelihood variance
 
         # this is neccesary to force all posterior samples to have the same GP hyperparameters
-        k = ConstantKernel(constant_value=alpha, constant_value_bounds="fixed") * Matern(
+        k = ConstantKernel(
+            constant_value=alpha, constant_value_bounds="fixed"
+        ) * Matern(
             nu=5 / 2, length_scale=ls, length_scale_bounds="fixed"
-        ) + WhiteKernel(noise, noise_level_bounds="fixed")
+        ) + WhiteKernel(
+            noise, noise_level_bounds="fixed"
+        )
         kernels.append(k)
+
+    def save_model(self, fname):
+        pass
 
     return kernels
